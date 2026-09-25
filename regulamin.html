@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulamin — Serwer PRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --tlo: #141210; --tlo-karta: #1c1a17; --linia: #322c22; --czerwien: #b5152b; --czerwien-jasna: #d81e3a; --zloto: #c9a84c; --zloto-jasne: #e3c878; --tekst: #ede7d9; --tekst-przygaszony: #9a9284; }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{ background: var(--tlo); color: var(--tekst); font-family: 'PT Sans', sans-serif; line-height: 1.55; min-height: 100vh; }
+  h1, .naglowek-tytul{ font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  .kontener{ max-width: 820px; margin: 0 auto; padding: 0 20px 60px; }
+  .naglowek{ position: relative; text-align: center; padding: 56px 20px 40px; border-bottom: 3px solid var(--czerwien); background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%); overflow: hidden; }
+  .naglowek::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien)); }
+  .gwiazda{ font-size: 28px; color: var(--zloto); display: block; margin-bottom: 14px; }
+  .naglowek-tytul{ font-size: clamp(26px, 5vw, 38px); font-weight: 700; color: var(--tekst); text-transform: uppercase; }
+  .naglowek-podtytul{ margin-top: 10px; font-size: clamp(13px, 2.2vw, 16px); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  .zakladki{ display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding: 0 20px; }
+  .zakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 22px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); text-decoration: none; display: inline-block; transition: all 0.2s ease; }
+  .zakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
+  .zakladka.aktywna{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border-color: var(--czerwien-jasna); color: #fff; }
+  .sekcja{ margin-top: 40px; }
+  .karta-regulamin{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; overflow: hidden; }
+  .punkt-regulaminu{ display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 18px 22px; border-bottom: 1px solid var(--linia); }
+  .punkt-regulaminu:last-child{ border-bottom: none; }
+  .punkt-numer{ font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: var(--zloto); }
+  .punkt-tresc{ font-size: 14px; color: var(--tekst); padding-top: 2px; }
+  .zaslad-akceptacji{ margin-top: 20px; padding: 20px 22px; text-align: center; background: rgba(201,168,76,0.08); border: 1px solid var(--zloto); border-radius: 6px; color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; font-size: 14px; }
+  .stopka{ margin-top: 60px; text-align: center; font-size: 12px; color: var(--tekst-przygaszony); padding-top: 24px; border-top: 1px solid var(--linia); }
+  .przycisk-discord{ display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px 22px; background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border: 1px solid var(--czerwien-jasna); border-radius: 4px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; text-decoration: none; }
+</style>
+</head>
+<body>
+  <header class="naglowek">
+    <span class="gwiazda">★</span>
+    <h1 class="naglowek-tytul">Regulamin Serwera</h1>
+    <p class="naglowek-podtytul">Zasady Obowiązujące Wszystkich Towarzyszy</p>
+  </header>
+  <nav class="zakladki">
+    <a class="zakladka aktywna" href="regulamin.html">Regulamin</a>
+    <a class="zakladka" href="index.html">Panel Główny</a>
+    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
+  </nav>
+  <div class="kontener">
+    <section class="sekcja">
+      <div class="karta-regulamin">
+        <div class="punkt-regulaminu"><span class="punkt-numer">1</span><span class="punkt-tresc">Szanuj wszystkich Towarzyszy.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">2</span><span class="punkt-tresc">Zakazane są: obrażanie, nękanie, prowokowanie konfliktów, dyskryminacja oraz podszywanie się pod innych lub Administrację.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">3</span><span class="punkt-tresc">Zabronione są: spam, flood, reklamy bez zgody Administracji, treści nielegalne, pornograficzne, gore oraz inne drastyczne lub nieodpowiednie materiały.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">4</span><span class="punkt-tresc">Korzystaj z odpowiednich kanałów i trzymaj się ich tematyki.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">5</span><span class="punkt-tresc">Nie publikuj cudzych danych osobowych bez zgody właściciela.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">6</span><span class="punkt-tresc">Szanuj decyzje Administracji i nie próbuj omijać nałożonych kar.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">7</span><span class="punkt-tresc">Za złamanie regulaminu grożą: ostrzeżenie, wyciszenie, ban czasowy lub permanentny.</span></div>
+        <div class="punkt-regulaminu"><span class="punkt-numer">8</span><span class="punkt-tresc">Administracja ma prawo zmienić regulamin oraz podejmować decyzje w sprawach nieujętych w jego treści.</span></div>
+      </div>
+      <div class="zaslad-akceptacji">Dołączając do serwera, każdy Towarzysz akceptuje powyższe zasady.</div>
+    </section>
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a><br>
+      Rzeczpospolita PRL
+    </div>
+  </div>
+</body>
+</html>

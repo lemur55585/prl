@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Główny — Serwer PRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tlo: #141210;
+    --tlo-karta: #1c1a17;
+    --tlo-karta-jasniej: #242119;
+    --linia: #322c22;
+    --czerwien: #b5152b;
+    --czerwien-jasna: #d81e3a;
+    --zloto: #c9a84c;
+    --zloto-jasne: #e3c878;
+    --tekst: #ede7d9;
+    --tekst-przygaszony: #9a9284;
+    --zielony: #4caf6d;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{ background: var(--tlo); color: var(--tekst); font-family: 'PT Sans', sans-serif; line-height: 1.55; min-height: 100vh; }
+  h1, h2, h3, .naglowek-tytul{ font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  a{ color: var(--zloto); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+  .kontener{ max-width: 960px; margin: 0 auto; padding: 0 20px 60px; }
+  .naglowek{ position: relative; text-align: center; padding: 56px 20px 40px; border-bottom: 3px solid var(--czerwien); background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%); overflow: hidden; }
+  .naglowek::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien)); }
+  .gwiazda{ font-size: 28px; color: var(--zloto); display: block; margin-bottom: 14px; }
+  .naglowek-tytul{ font-size: clamp(28px, 5vw, 44px); font-weight: 700; color: var(--tekst); text-transform: uppercase; }
+  .naglowek-podtytul{ margin-top: 10px; font-size: clamp(14px, 2.4vw, 17px); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  .status-serwera{ margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 999px; font-size: 14px; color: var(--tekst-przygaszony); }
+  .kropka-status{ width: 10px; height: 10px; border-radius: 50%; background: var(--zielony); box-shadow: 0 0 8px var(--zielony); flex-shrink: 0; }
+  .zakladki{ display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding: 0 20px; }
+  .zakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 22px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); display: inline-block; transition: all 0.2s ease; }
+  .zakladka:hover{ color: var(--tekst); border-color: var(--zloto); text-decoration: none; }
+  .zakladka.aktywna{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border-color: var(--czerwien-jasna); color: #fff; }
+  .baner-glosowanie{ display: flex; align-items: center; gap: 10px; background: rgba(201,168,76,0.10); border: 1px solid var(--zloto); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 16px; border-radius: 4px; margin-bottom: 20px; }
+  .kropka-protest{ width: 10px; height: 10px; border-radius: 50%; background: var(--zloto); box-shadow: 0 0 8px var(--zloto); animation: pulsGlosowanie 1.4s infinite; flex-shrink: 0; }
+  @keyframes pulsGlosowanie{ 0%, 100%{ opacity: 1; } 50%{ opacity: 0.35; } }
+  .sekcja{ margin-top: 48px; }
+  .sekcja-tytul{ font-size: 13px; font-weight: 600; color: var(--zloto); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--linia); }
+  .siatka{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 640px){ .siatka{ grid-template-columns: 1fr; } }
+  .karta{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 24px; position: relative; }
+  .karta::before{ content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--czerwien); border-radius: 6px 0 0 6px; }
+  .karta-naglowek{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; gap: 10px; flex-wrap: wrap; }
+  .karta-etykieta{ font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; }
+  .karta-imie{ font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 600; color: var(--tekst); }
+  .karta-status-tekst{ font-size: 13px; color: var(--zloto-jasne); }
+  .licznik-dni{ margin: 18px 0 10px; font-family: 'Oswald', sans-serif; font-size: 15px; color: var(--tekst); }
+  .licznik-dni strong{ color: var(--zloto-jasne); font-size: 20px; }
+  .pasek-tlo{ width: 100%; height: 10px; background: var(--tlo-karta-jasniej); border-radius: 999px; overflow: hidden; border: 1px solid var(--linia); }
+  .pasek-wypelnienie{ height: 100%; background: linear-gradient(90deg, var(--czerwien), var(--zloto)); border-radius: 999px; }
+  .pasek-podpis{ display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--tekst-przygaszony); }
+  .karta-prawna{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 26px; }
+  .karta-prawna-wiersz{ display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--linia); flex-wrap: wrap; gap: 6px; }
+  .karta-prawna-wiersz:last-child{ border-bottom: none; }
+  .karta-prawna-etykieta{ color: var(--tekst-przygaszony); font-size: 14px; }
+  .karta-prawna-wartosc{ color: var(--zloto-jasne); font-weight: 700; font-family: 'Oswald', sans-serif; }
+  .znacznik-ok{ display: inline-flex; align-items: center; gap: 6px; color: var(--zielony); font-size: 13px; font-weight: 700; }
+  .lista-odznaczen{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; overflow: hidden; }
+  .odznaczenie{ display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 16px 22px; border-bottom: 1px solid var(--linia); }
+  .odznaczenie:last-child{ border-bottom: none; }
+  .odznaczenie-medal{ font-size: 22px; color: var(--zloto); flex-shrink: 0; }
+  .odznaczenie-imie{ font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 600; color: var(--tekst); }
+  .odznaczenie-powod{ font-size: 13px; color: var(--tekst-przygaszony); margin-top: 2px; }
+  .odznaczenie-data{ font-size: 12px; color: var(--zloto-jasne); white-space: nowrap; text-align: right; }
+  .stopka{ margin-top: 60px; text-align: center; font-size: 12px; color: var(--tekst-przygaszony); padding-top: 24px; border-top: 1px solid var(--linia); }
+  .przycisk-discord{ display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px 22px; background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border: 1px solid var(--czerwien-jasna); border-radius: 4px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; text-decoration: none; }
+</style>
+</head>
+<body>
+  <header class="naglowek">
+    <span class="gwiazda">★</span>
+    <h1 class="naglowek-tytul">Oficjalny Panel Informacyjny Serwera PRL</h1>
+    <p class="naglowek-podtytul">Centrum Zarządzania i Statystyk</p>
+    <div class="status-serwera">
+      <span class="kropka-status"></span>
+      <span>Serwer Operacyjny</span>
+    </div>
+  </header>
+
+  <nav class="zakladki">
+    <a class="zakladka" href="regulamin.html">Regulamin</a>
+    <a class="zakladka aktywna" href="index.html">Panel Główny</a>
+    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
+  </nav>
+
+  <div class="kontener">
+    <section class="sekcja">
+      <div class="sekcja-tytul">Zegary i Kadencje</div>
+      <div class="baner-glosowanie" id="banerGlosowania" style="display:none;">
+        <span class="kropka-protest"></span> Trwa głosowanie
+      </div>
+      <div class="siatka">
+        <div class="karta">
+          <div class="karta-naglowek"><span class="karta-etykieta">I Sekretarz</span></div>
+          <div class="karta-imie" id="imieSekretarza1">—</div>
+          <div class="licznik-dni">Dzień kadencji: <strong id="dzienKadencji1">0</strong> / <span id="dlugoscKadencji1">0</span></div>
+          <div class="pasek-tlo"><div class="pasek-wypelnienie" id="paskSekretarz1" style="width:0%"></div></div>
+          <div class="pasek-podpis"><span id="procentSekretarz1">0%</span><span id="pozostaloSekretarz1">—</span></div>
+        </div>
+
+        <div class="karta">
+          <div class="karta-naglowek"><span class="karta-etykieta">II Sekretarz</span></div>
+          <div class="karta-imie" id="imieSekretarza2">—</div>
+          <div class="karta-status-tekst" id="statusSekretarza2">Kadencja w toku</div>
+          <div class="licznik-dni">Dzień kadencji: <strong id="dzienKadencji2">0</strong> / <span id="dlugoscKadencji2">0</span></div>
+          <div class="pasek-tlo"><div class="pasek-wypelnienie" id="paskSekretarz2" style="width:0%"></div></div>
+          <div class="pasek-podpis"><span id="procentSekretarz2">0%</span><span id="pozostaloSekretarz2">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sekcja">
+      <div class="sekcja-tytul">Baza Prawna i Ustawy</div>
+      <div class="karta-prawna">
+        <div class="karta-prawna-wiersz"><span class="karta-prawna-etykieta">Obowiązująca Konstytucja</span><span class="karta-prawna-wartosc" id="nazwaKonstytucji">—</span></div>
+        <div class="karta-prawna-wiersz"><span class="karta-prawna-etykieta">Status prawny serwera</span><span class="znacznik-ok" id="statusPrawny"><span>●</span> W mocy</span></div>
+        <div class="karta-prawna-wiersz"><span class="karta-prawna-etykieta">Data nowelizacji</span><span class="karta-prawna-wartosc" id="dataNowelizacji">—</span></div>
+      </div>
+    </section>
+
+    <section class="sekcja">
+      <div class="sekcja-tytul">Rejestr Odznaczeń Państwowych — Order Orła Czerwonego</div>
+      <div class="lista-odznaczen" id="listaOdznaczen"></div>
+    </section>
+
+    <section class="sekcja">
+      <div class="sekcja-tytul">Zarządcy Uczelni</div>
+      <div class="lista-odznaczen" id="listaZarzadcy"></div>
+    </section>
+
+    <section class="sekcja">
+      <div class="sekcja-tytul">Wykładowcy</div>
+      <div class="lista-odznaczen" id="listaWykladowcy"></div>
+    </section>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a><br>
+      Rzeczpospolita PRL — Panel odświeżany automatycznie na żywo
+    </div>
+  </div>
+
+<script>
+  /* --- STANOWISKA I KADENCJE --- */
+  const nazwaSekretarza1     = "Pax";
+  const dataStartuKadencji1  = "2026-09-05T00:00:00";
+  const dataKoncaKadencji1   = "2026-10-31T23:59:59";
+
+  const nazwaSekretarza2     = "Devon";
+  const dataStartuKadencji2  = "2026-09-05T00:00:00";
+  const dataKoncaKadencji2   = "2026-10-31T23:59:59";
+
+  /* --- BAZA PRAWNA --- */
+  const nazwaKonstytucjiTekst   = "Konstytucja PRL z 2026";
+  const dataNowelizacjiTekst    = "03.08.2026";
+  const statusPrawnyAktywny     = true;
+  const czyTrwaGlosowanie       = false;
+
+  /* --- REJESTR ODZNACZEŃ (ORDER ORŁA CZERWONEGO) --- */
+  const listaOdznaczonychObywateli = [
+    { imie: "Maloy", powod: "Za utworzenie serwera i ogromną aktywność", data: "" },
+    { imie: "Pas",   powod: "Za bycie z nami od samych początków i dalszego uczestnictwa w życiu serwera", data: "" },
+    { imie: "Devon", powod: "Za rozbudowę serwera i zostanie pierwszą osobą na stanowisku sekretarza po Maloyu", data: "" },
+    { imie: "Pax",   powod: "Za współzałożenie pierwszego serwera i pomaganie w następnych", data: "" },
+    { imie: "Eko",   powod: "Za znaczący udział przy tworzeniu PRL3, dodanie na serwer wielu nowych osób i organizację eventu z pisania konstytucji", data: "" }
+  ];
+
+  /* --- ZARZĄDCY UCZELNI --- */
+  const listaZarzadcowUczelni = [
+    { imie: "Brak zarządców", powod: "Wydział nieobsadzony.", data: "" }
+  ];
+
+  /* --- WYKŁADOWCY --- */
+  const listaWykladowcow = [
+    { imie: "Brak wykładowców", powod: "Brak przypisanych profili.", data: "" }
+  ];
+
+  function obliczKadencje(dataStartu, dataKonca){
+    const start = new Date(dataStartu);
+    const koniec = new Date(dataKonca);
+    const teraz = new Date();
+    const dlugoscDni = Math.round((koniec - start) / 86400000);
+    const minelo = Math.floor((teraz - start) / 86400000) + 1;
+    const dzien = Math.max(1, Math.min(dlugoscDni, minelo));
+    const pozostalo = Math.max(0, dlugoscDni - dzien);
+    const procent = Math.max(0, Math.min(100, (dzien / dlugoscDni) * 100));
+    const zakonczona = teraz >= koniec;
+    return { dzien, dlugoscDni, pozostalo, procent, zakonczona };
+  }
+
+  function ustawKadencje(prefix, imie, dataStartu, dataKonca){
+    const dane = obliczKadencje(dataStartu, dataKonca);
+    document.getElementById("imieSekretarza" + prefix).textContent = imie;
+    document.getElementById("dzienKadencji" + prefix).textContent = dane.dzien;
+    document.getElementById("dlugoscKadencji" + prefix).textContent = dane.dlugoscDni;
+    document.getElementById("paskSekretarz" + prefix).style.width = dane.procent.toFixed(1) + "%";
+    document.getElementById("procentSekretarz" + prefix).textContent = dane.procent.toFixed(0) + "%";
+    document.getElementById("pozostaloSekretarz" + prefix).textContent = dane.zakonczona ? "Trwają wybory" : dane.pozostalo + " dni do końca";
+    return dane;
+  }
+
+  function odswiezPanel(){
+    ustawKadencje(1, nazwaSekretarza1, dataStartuKadencji1, dataKoncaKadencji1);
+    const dane2 = ustawKadencje(2, nazwaSekretarza2, dataStartuKadencji2, dataKoncaKadencji2);
+    document.getElementById("statusSekretarza2").textContent = dane2.zakonczona ? "Trwają wybory" : "Kadencja w toku";
+    document.getElementById("nazwaKonstytucji").textContent = nazwaKonstytucjiTekst;
+    document.getElementById("dataNowelizacji").textContent = dataNowelizacjiTekst;
+    const statusEl = document.getElementById("statusPrawny");
+    statusEl.innerHTML = statusPrawnyAktywny ? "<span>●</span> W mocy" : "<span>●</span> Zawieszona";
+    statusEl.style.color = statusPrawnyAktywny ? "var(--zielony)" : "var(--czerwien-jasna)";
+  }
+
+  function zbudujListe(idKontenera, dane, ikona){
+    const kontener = document.getElementById(idKontenera);
+    kontener.innerHTML = "";
+    dane.forEach(osoba => {
+      const wiersz = document.createElement("div");
+      wiersz.className = "odznaczenie";
+      wiersz.innerHTML = `<span class="odznaczenie-medal">${ikona}</span><div><div class="odznaczenie-imie">${osoba.imie}</div><div class="odznaczenie-powod">${osoba.powod}</div></div><span class="odznaczenie-data">${osoba.data}</span>`;
+      kontener.appendChild(wiersz);
+    });
+  }
+
+  odswiezPanel();
+  zbudujListe("listaOdznaczen", listaOdznaczonychObywateli, "★");
+  zbudujListe("listaZarzadcy", listaZarzadcowUczelni, "🎓");
+  zbudujListe("listaWykladowcy", listaWykladowcow, "📚");
+  document.getElementById("banerGlosowania").style.display = czyTrwaGlosowanie ? "flex" : "none";
+  setInterval(odswiezPanel, 60000);
+</script>
+</body>
+</html>

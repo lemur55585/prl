@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konstytucja — Serwer PRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tlo: #141210;
+    --tlo-karta: #1c1a17;
+    --tlo-karta-jasniej: #242119;
+    --linia: #322c22;
+    --czerwien: #b5152b;
+    --czerwien-jasna: #d81e3a;
+    --zloto: #c9a84c;
+    --zloto-jasne: #e3c878;
+    --tekst: #ede7d9;
+    --tekst-przygaszony: #9a9284;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  body{
+    background: var(--tlo);
+    color: var(--tekst);
+    font-family: 'PT Sans', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, .naglowek-tytul{
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .kontener{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* NAGŁÓWEK */
+  .naglowek{
+    position: relative;
+    text-align: center;
+    padding: 56px 20px 40px;
+    border-bottom: 3px solid var(--czerwien);
+    background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%);
+    overflow: hidden;
+  }
+
+  .naglowek::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien));
+  }
+
+  .gwiazda{
+    font-size: 28px;
+    color: var(--zloto);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .naglowek-tytul{
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700;
+    color: var(--tekst);
+    text-transform: uppercase;
+  }
+
+  .naglowek-podtytul{
+    margin-top: 10px;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: var(--zloto-jasne);
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* NAWIGACJA */
+  .zakladki{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding: 0 20px;
+  }
+
+  .zakladka{
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 22px;
+    background: var(--tlo-karta);
+    border: 1px solid var(--linia);
+    border-radius: 4px;
+    color: var(--tekst-przygaszony);
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  .zakladka:hover{
+    color: var(--tekst);
+    border-color: var(--zloto);
+  }
+
+  .zakladka.aktywna{
+    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
+    border-color: var(--czerwien-jasna);
+    color: #fff;
+  }
+
+  /* SEKCJE / ROZDZIAŁY */
+  .sekcja{ margin-top: 40px; }
+
+  .rozdzial-karta{
+    background: var(--tlo-karta);
+    border: 1px solid var(--linia);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    padding: 24px;
+    position: relative;
+  }
+
+  .rozdzial-karta::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--czerwien);
+    border-radius: 6px 0 0 6px;
+  }
+
+  .rozdzialtytul{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--zloto-jasne);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linia);
+  }
+
+  .artykul-p{
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--tekst);
+  }
+
+  .artykul-p:first-of-type{
+    margin-top: 0;
+  }
+
+  .artykul-p strong{
+    color: var(--zloto);
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  /* STOPKA */
+  .stopka{
+    margin-top: 60px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--tekst-przygaszony);
+    padding-top: 24px;
+    border-top: 1px solid var(--linia);
+  }
+
+  .przycisk-discord{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
+    border: 1px solid var(--czerwien-jasna);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .przycisk-discord:hover{
+    opacity: 0.85;
+  }
+
+</style>
+</head>
+<body>
+
+  <header class="naglowek">
+    <span class="gwiazda">★</span>
+    <h1 class="naglowek-tytul">Konstytucja PRL</h1>
+    <p class="naglowek-podtytul">z dnia 30 sierpnia 2026 roku[cite: 8]</p>
+  </header>
+
+  <nav class="zakladki">
+    <a class="zakladka" href="regulamin.html">Regulamin</a>
+    <a class="zakladka" href="index.html">Panel Główny</a>
+    <a class="zakladka aktywna" href="konstytucja.html">Konstytucja</a>
+  </nav>
+
+  <div class="kontener">
+    <section class="sekcja">
+
+      <!-- ROZDZIAŁ 1 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">1. Postanowienia ogólne[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Serwer oficjalnie jest świecki.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Na serwerze oficjalnie panuje ustrój jednopartyjny.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Hymnem serwera jest: Międzynarodówka.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Każdy ma równe prawa i każdy równo ponosi konsekwencje swoich zachowań.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 2 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">2. Członkostwo w Partii[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Jedno miejsce w partii przypada na pięciu członków z rangą towarzysza.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Członkowie mogą: a) proponować ustawy, b) głosować w sprawie ustaw, c) kandydować na I Sekretarza, d) awansować do ZOMO i Administracji.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Członków mianuje I Sekretarz.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Członków może odwołać I Sekretarz lub ponad ⅔ członków partii w wyniku głosowania.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> Aby ubiegać się o stanowisko członka partii trzeba: a) być na serwerze minimum tydzień, b) nie być członkiem opozycji, c) być choć trochę aktywną osobą.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 3 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">3. I Sekretarz[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Kadencja I Sekretarza trwa 2 miesiące.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> I Sekretarz może zrezygnować w każdej chwili.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> I Sekretarz jest wybierany w wyborach ogólnoserwerowych.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> I Sekretarz jest zobowiązany do: a) organizowania głosowań nad poszczególnymi wnioskami, b) wprowadzania zmian za pośrednictwem administracji, c) koordynowania pracy administracji.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> I Sekretarz może dowolnie wymieniać członków partii spełniających wymagania z art. 5 rozdziału II oraz może dokonać maksymalnie 3 zmian dziennie.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> I Sekretarz nie może sam mianować się administratorem.</p>
+        <p class="artykul-p"><strong>Art. 7.</strong> Jeśli I Sekretarz nie jest pewny podjęcia decyzji lub chce, by zdecydował lud, może zorganizować referendum ogólnoserwerowe (referendum nie może dotyczyć ustawy ani zmiany konstytucji).</p>
+        <p class="artykul-p"><strong>Art. 8.</strong> I Sekretarz może zostać odwołany głosem ponad 3/4 obywateli w ogólnoserwerowym głosowaniu.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 4 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">4. II Sekretarz[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> II Sekretarza mianuje I Sekretarz jako swojego zastępcę.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Gdy I Sekretarz jest nieobecny, II Sekretarz zajmuje jego pozycję do czasu powrotu I Sekretarza.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Gdy I Sekretarz zrezygnuje, II Sekretarz automatycznie staje się I Sekretarzem i wybiera nowego zastępcę.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> I Sekretarz nie może zmienić II Sekretarza przez 20 dni od jego wyboru.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> II Sekretarz jest zobowiązany do: a) koordynowania pracy ZOMO, b) pilnowania, by regulamin był przestrzegany na serwerze.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> II Sekretarz nie może sam mianować się członkiem ZOMO.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 5 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">5. ZOMO[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> ZOMO powołuje II Sekretarz po objęciu stanowiska.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> ZOMO mogą zostać tylko członkowie partii.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> ZOMO jest zobowiązane do: a) pilnowania przestrzegania regulaminu, b) tworzenia ankiet min. raz na 2 tygodnie.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli członek ZOMO będzie nadużywać swoich uprawnień, może dostać karę bez ostrzeżenia.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 6 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">6. Administracja[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Administrację powołuje I Sekretarz na początku swojej kadencji.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Administratorami mogą zostać tylko członkowie partii.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Administracja jest zobowiązana do: a) wprowadzania przegłosowanych ustaw i wniosków, b) wykonywania poleceń I Sekretarza.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli członek administracji będzie nadużywać swoich uprawnień, może dostać karę bez ostrzeżenia lub, gdy przewinienia będą poważne, może zostać zastosowany ban.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 7 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">7. Założyciel Serwera[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Założyciel serwera jest jednocześnie prezesem banku.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Założyciel serwera nie może zostać I ani II Sekretarzem.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Kiedy założyciel widzi łamanie konstytucji/regulaminu, może od razu zastosować karę.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli założyciel serwera zauważy, że władza stwarza zagrożenie zniszczenia serwera lub jego mocnego osłabienia, może ją usunąć — musi jednak mieć do tego powód.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> Założyciel serwera klasyfikuje ustawy, wnioski i zmiany konstytucji.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 8 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">8. Ustawy[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Ustawy i wnioski mogą składać wyłącznie członkowie partii i opozycji.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Wnioski są rozpatrywane przez I Sekretarza bez głosowań.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Złożona ustawa musi najpierw zostać sprawdzona pod kątem zgodności z konstytucją i sklasyfikowana jako ustawa przez założyciela serwera, a dopiero potem dopuszczona do głosowania.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Gdy ustawa jest dopuszczona do głosowania, I Sekretarz organizuje 24-godzinne głosowanie, w którym wygrywa opcja zaznaczona przez większość członków partii.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> W sytuacji remisu w głosowaniu I Sekretarz podejmuje decyzję, czy ustawa przeszła.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> Gdy ustawa przejdzie głosowanie, I Sekretarz może ją przyjąć i wdrożyć najszybciej jak to możliwe lub zawetować i cofnąć do głosowania, gdzie aby przejść, musi uzyskać ponad 2/3 głosów.</p>
+        <p class="artykul-p"><strong>Art. 7.</strong> Wniosek to: 1) zgłoszenie nieprawidłowego zachowania administracji, ZOMO, I lub II Sekretarza lub innego członka serwera, 2) propozycja małej zmiany (np. zmiana nazwy kanału, dodanie emotki, naklejki itp.).</p>
+        <p class="artykul-p"><strong>Art. 8.</strong> Ustawa to propozycja większych zmian dotyczących regulaminu, ekonomii, dodania nowego kanału, nowego bota itp.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 9 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">9. Wybory[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Wybory na I Sekretarza organizuje założyciel serwera.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> O stanowisko I Sekretarza mogą ubiegać się tylko członkowie partii.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Kandydaci muszą umieścić swoje programy wyborcze na odpowiednim kanale w określony dzień, inaczej zostaną usunięci z kandydatury.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Gdy kandydat w I turze dostanie więcej niż 50% głosów, wygrywa wybory automatycznie.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> Gdy w I turze jest remis uniemożliwiający organizację II tury z 2 kandydatami, organizowana jest przejściowa II tura, która decyduje o tym, kto przejdzie do III tury.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> Jeśli kandydat zrezygnuje w trakcie wyborów, jego głosy są nieważne już od I tury, co może całkowicie odwrócić bieg wyborów.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 10 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">10. Order Orła Czerwonego[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Order Orła Czerwonego to najwyższe odznaczenie na serwerze.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Order Orła Czerwonego może nadawać tylko założyciel serwera za szczególne i uzasadnione zasługi, jednak na nadanie muszą wyrazić zgodę I i II Sekretarz.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Order Orła Czerwonego może zostać odebrany tylko wtedy, gdy zgodzą się na to Założyciel oraz I i II Sekretarz.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 11 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">11. Zmiana Konstytucji[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Propozycje zmiany konstytucji mogą złożyć tylko członkowie partii i opozycji.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Po sklasyfikowaniu propozycji jako zmiany konstytucji przez założyciela serwera, I Sekretarz jest zobowiązany zorganizować głosowanie, w którym potrzeba powyżej 4/5 głosów za, by zmiana przeszła — wtedy I Sekretarz nie może jej zawetować, a zmiana wchodzi w życie od następnego poniedziałku po przyjęciu.</p>
+      </div>
+
+      <!-- ROZDZIAŁ 12 -->
+      <div class="rozdzial-karta">
+        <h2 class="rozdzialtytul">12. Przepisy końcowe[cite: 8]</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Konstytucja zaczyna obowiązywać na serwerach PRL 3 i nowszych (jeśli takie będą) od 01.09.2026 r.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Do aktualizacji konstytucji mają dostęp tylko Maloy i Krzychu Bluetesowicz.</p>
+      </div>
+
+    </section>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a>
+      <br>
+      Rzeczpospolita PRL — Konstytucja oficjalna
+    </div>
+
+  </div>
+
+</body>
+</html>
