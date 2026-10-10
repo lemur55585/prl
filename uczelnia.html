@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uczelnia — Serwer PRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tlo: #141210;
+    --tlo-karta: #1c1a17;
+    --tlo-karta-jasniej: #242119;
+    --linia: #322c22;
+    --czerwien: #b5152b;
+    --czerwien-jasna: #d81e3a;
+    --zloto: #c9a84c;
+    --zloto-jasne: #e3c878;
+    --tekst: #ede7d9;
+    --tekst-przygaszony: #9a9284;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  body{
+    background: var(--tlo);
+    color: var(--tekst);
+    font-family: 'PT Sans', sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, .naglowek-tytul{
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .kontener{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* NAGŁÓWEK */
+  .naglowek{
+    position: relative;
+    text-align: center;
+    padding: 56px 20px 40px;
+    border-bottom: 3px solid var(--czerwien);
+    background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%);
+    overflow: hidden;
+  }
+
+  .naglowek::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien));
+  }
+
+  .gwiazda{
+    font-size: 28px;
+    color: var(--zloto);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .naglowek-tytul{
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700;
+    color: var(--tekst);
+    text-transform: uppercase;
+  }
+
+  .naglowek-podtytul{
+    margin-top: 10px;
+    font-size: clamp(13px, 2.2vw, 16px);
+    color: var(--zloto-jasne);
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* NAWIGACJA */
+  .zakladki{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding: 0 20px;
+  }
+
+  .zakladka{
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 22px;
+    background: var(--tlo-karta);
+    border: 1px solid var(--linia);
+    border-radius: 4px;
+    color: var(--tekst-przygaszony);
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  .zakladka:hover{
+    color: var(--tekst);
+    border-color: var(--zloto);
+  }
+
+  .zakladka.aktywna{
+    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
+    border-color: var(--czerwien-jasna);
+    color: #fff;
+  }
+
+  /* SEKCJA WYKŁADOWCY */
+  .sekcja{ margin-top: 40px; }
+
+  .sekcja-tytul{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--zloto);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--linia);
+  }
+
+  .siatka-wykladowcy{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .karta-wykladowcy{
+    background: var(--tlo-karta);
+    border: 1px solid var(--linia);
+    border-radius: 6px;
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.2s ease;
+  }
+
+  .karta-wykladowcy:hover{
+    border-color: var(--zloto);
+  }
+
+  .karta-wykladowcy::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--czerwien);
+    border-radius: 6px 0 0 6px;
+  }
+
+  .naglowek-wykladowcy{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--linia);
+  }
+
+  .ikona-wykladowcy{
+    font-size: 26px;
+    color: var(--zloto);
+  }
+
+  .imie-wykladowcy{
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--tekst);
+    text-transform: uppercase;
+  }
+
+  .etykieta-przedmioty{
+    font-size: 12px;
+    color: var(--tekst-przygaszony);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .lista-przedmiotow{
+    list-style: none;
+  }
+
+  .lista-przedmiotow li{
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--zloto-jasne);
+    font-weight: 700;
+  }
+
+  .lista-przedmiotow li::before{
+    content: "★";
+    position: absolute;
+    left: 0;
+    color: var(--czerwien-jasna);
+    font-size: 12px;
+  }
+
+  /* STOPKA */
+  .stopka{
+    margin-top: 60px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--tekst-przygaszony);
+    padding-top: 24px;
+    border-top: 1px solid var(--linia);
+  }
+
+  .przycisk-discord{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
+    border: 1px solid var(--czerwien-jasna);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+  <header class="naglowek">
+    <span class="gwiazda">★</span>
+    <h1 class="naglowek-tytul">Uczelnia PRL</h1>
+    <p class="naglowek-podtytul">Spis Wykładowców i Kadr Naukowych</p>
+  </header>
+
+  <nav class="zakladki">
+    <a class="zakladka" href="regulamin.html">Regulamin</a>
+    <a class="zakladka" href="index.html">Panel Główny</a>
+    <a class="zakladka aktywna" href="uczelnia.html">Uczelnia</a>
+    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
+  </nav>
+
+  <div class="kontener">
+    <section class="sekcja">
+      <div class="sekcja-tytul">Spis Wykładowców</div>
+      <div class="siatka-wykladowcy">
+
+        <!-- Lemur -->
+        <div class="karta-wykladowcy">
+          <div class="naglowek-wykladowcy">
+            <span class="ikona-wykladowcy">📚</span>
+            <div class="imie-wykladowcy">Lemur</div>
+          </div>
+          <div class="etykieta-przedmioty">Prowadzone przedmioty:</div>
+          <ul class="lista-przedmiotow">
+            <li>Fizyka</li>
+            <li>Informatyka</li>
+          </ul>
+        </div>
+
+        <!-- Bluetes -->
+        <div class="karta-wykladowcy">
+          <div class="naglowek-wykladowcy">
+            <span class="ikona-wykladowcy">📜</span>
+            <div class="imie-wykladowcy">Bluetes</div>
+          </div>
+          <div class="etykieta-przedmioty">Prowadzone przedmioty:</div>
+          <ul class="lista-przedmiotow">
+            <li>Historia</li>
+          </ul>
+        </div>
+
+        <!-- Hirohito -->
+        <div class="karta-wykladowcy">
+          <div class="naglowek-wykladowcy">
+            <span class="ikona-wykladowcy">⚛️</span>
+            <div class="imie-wykladowcy">Hirohito</div>
+          </div>
+          <div class="etykieta-przedmioty">Prowadzone przedmioty:</div>
+          <ul class="lista-przedmiotow">
+            <li>Chemia</li>
+            <li>Matematyka</li>
+            <li>Fizyka Jądrowa</li>
+            <li>Fizyka Kwantowa</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a>
+      <br>
+      Rzeczpospolita PRL — Wydział Oświaty i Nauki
+    </div>
+  </div>
+
+</body>
+</html>

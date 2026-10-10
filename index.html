@@ -86,6 +86,7 @@
   <nav class="zakladki">
     <a class="zakladka" href="regulamin.html">Regulamin</a>
     <a class="zakladka aktywna" href="index.html">Panel Główny</a>
+    <a class="zakladka" href="uczelnia.html">Uczelnia</a>
     <a class="zakladka" href="konstytucja.html">Konstytucja</a>
   </nav>
 
@@ -129,16 +130,6 @@
       <div class="lista-odznaczen" id="listaOdznaczen"></div>
     </section>
 
-    <section class="sekcja">
-      <div class="sekcja-tytul">Zarządcy Uczelni</div>
-      <div class="lista-odznaczen" id="listaZarzadcy"></div>
-    </section>
-
-    <section class="sekcja">
-      <div class="sekcja-tytul">Wykładowcy</div>
-      <div class="lista-odznaczen" id="listaWykladowcy"></div>
-    </section>
-
     <div class="stopka">
       <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a><br>
       Rzeczpospolita PRL — Panel odświeżany automatycznie na żywo
@@ -157,7 +148,7 @@
 
   /* --- BAZA PRAWNA --- */
   const nazwaKonstytucjiTekst   = "Konstytucja PRL z 2026";
-  const dataNowelizacjiTekst    = "03.08.2026";
+  const dataNowelizacjiTekst    = "01.08.2026";
   const statusPrawnyAktywny     = true;
   const czyTrwaGlosowanie       = false;
 
@@ -168,16 +159,6 @@
     { imie: "Devon", powod: "Za rozbudowę serwera i zostanie pierwszą osobą na stanowisku sekretarza po Maloyu", data: "" },
     { imie: "Pax",   powod: "Za współzałożenie pierwszego serwera i pomaganie w następnych", data: "" },
     { imie: "Eko",   powod: "Za znaczący udział przy tworzeniu PRL3, dodanie na serwer wielu nowych osób i organizację eventu z pisania konstytucji", data: "" }
-  ];
-
-  /* --- ZARZĄDCY UCZELNI --- */
-  const listaZarzadcowUczelni = [
-    { imie: "Brak zarządców", powod: "Wydział nieobsadzony.", data: "" }
-  ];
-
-  /* --- WYKŁADOWCY --- */
-  const listaWykladowcow = [
-    { imie: "Brak wykładowców", powod: "Brak przypisanych profili.", data: "" }
   ];
 
   function obliczKadencje(dataStartu, dataKonca){
@@ -217,6 +198,7 @@
 
   function zbudujListe(idKontenera, dane, ikona){
     const kontener = document.getElementById(idKontenera);
+    if (!kontener) return;
     kontener.innerHTML = "";
     dane.forEach(osoba => {
       const wiersz = document.createElement("div");
@@ -228,8 +210,6 @@
 
   odswiezPanel();
   zbudujListe("listaOdznaczen", listaOdznaczonychObywateli, "★");
-  zbudujListe("listaZarzadcy", listaZarzadcowUczelni, "🎓");
-  zbudujListe("listaWykladowcy", listaWykladowcow, "📚");
   document.getElementById("banerGlosowania").style.display = czyTrwaGlosowanie ? "flex" : "none";
   setInterval(odswiezPanel, 60000);
 </script>
