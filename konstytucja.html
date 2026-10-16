@@ -168,6 +168,26 @@
     letter-spacing: 0.02em;
   }
 
+  .podpunkt-lista{
+    margin-top: 6px;
+    margin-left: 20px;
+    list-style-type: none;
+  }
+
+  .podpunkt-lista li{
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .podpunkt-lista li::before{
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--zloto);
+  }
+
   /* STOPKA */
   .stopka{
     margin-top: 60px;
@@ -207,12 +227,13 @@
   <header class="naglowek">
     <span class="gwiazda">★</span>
     <h1 class="naglowek-tytul">Konstytucja PRL</h1>
-    <p class="naglowek-podtytul">z dnia 30 sierpnia 2026 roku[cite: 8]</p>
+    <p class="naglowek-podtytul">Tekst Jednolity z Nowelizacją</p>
   </header>
 
   <nav class="zakladki">
     <a class="zakladka" href="regulamin.html">Regulamin</a>
     <a class="zakladka" href="index.html">Panel Główny</a>
+    <a class="zakladka" href="uczelnia.html">Uczelnia</a>
     <a class="zakladka aktywna" href="konstytucja.html">Konstytucja</a>
   </nav>
 
@@ -221,119 +242,147 @@
 
       <!-- ROZDZIAŁ 1 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">1. Postanowienia ogólne</h2>
+        <h2 class="rozdzialtytul">Rozdział I. Postanowienia Ogólne</h2>
         <p class="artykul-p"><strong>Art. 1.</strong> Serwer oficjalnie jest świecki.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Na serwerze oficjalnie panuje ustrój jednopartyjny.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Hymnem serwera jest: Międzynarodówka.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Każdy ma równe prawa i każdy równo ponosi konsekwencje swoich zachowań.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Na serwerze panuje ustrój jednopartyjny.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Hymnem serwera jest <em>Międzynarodówka</em>.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Wszystkim obywatelom przysługują równe prawa oraz jednakowy obowiązek ponoszenia konsekwencji za swoje zachowania.</p>
       </div>
 
       <!-- ROZDZIAŁ 2 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">2. Członkostwo w Partii</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Jedno miejsce w partii przypada na pięciu członków z rangą towarzysza.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Członkowie mogą: a) proponować ustawy, b) głosować w sprawie ustaw, c) kandydować na I Sekretarza, d) awansować do ZOMO i Administracji.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Członków mianuje I Sekretarz.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Członków może odwołać I Sekretarz lub ponad ⅔ członków partii w wyniku głosowania.</p>
-        <p class="artykul-p"><strong>Art. 5.</strong> Aby ubiegać się o stanowisko członka partii trzeba: a) być na serwerze minimum tydzień, b) nie być członkiem opozycji, c) być choć trochę aktywną osobą.</p>
+        <h2 class="rozdzialtytul">Rozdział II. Członkostwo w Partii</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Jedno miejsce w Partii przypada na pięciu członków posiadających rangę Towarzysza.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Członkowie Partii posiadają prawo do:</p>
+        <ul class="podpunkt-lista">
+          <li>proponowania ustaw i wniosków,</li>
+          <li>głosowania w sprawach ustawowych,</li>
+          <li>kandydowania na stanowisko I Sekretarza,</li>
+          <li>ubiegania się o awans do struktur ZOMO oraz Administracji.</li>
+        </ul>
+        <p class="artykul-p"><strong>Art. 3.</strong> Członków Partii mianuje I Sekretarz.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Członków Partii może odwołać I Sekretarz lub ponad ⅔ członków Partii w drodze głosowania.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> Wymagania wobec kandydata na członka Partii:</p>
+        <ul class="podpunkt-lista">
+          <li>obecność na serwerze przez co najmniej 7 dni,</li>
+          <li>brak członkostwa w strukturach opozycji,</li>
+          <li>wykazywanie się aktywnością w życiu społeczności.</li>
+        </ul>
       </div>
 
       <!-- ROZDZIAŁ 3 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">3. I Sekretarz</h2>
+        <h2 class="rozdzialtytul">Rozdział III. I Sekretarz</h2>
         <p class="artykul-p"><strong>Art. 1.</strong> Kadencja I Sekretarza trwa 2 miesiące.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> I Sekretarz może zrezygnować w każdej chwili.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> I Sekretarz jest wybierany w wyborach ogólnoserwerowych.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> I Sekretarz jest zobowiązany do: a) organizowania głosowań nad poszczególnymi wnioskami, b) wprowadzania zmian za pośrednictwem administracji, c) koordynowania pracy administracji.</p>
-        <p class="artykul-p"><strong>Art. 5.</strong> I Sekretarz może dowolnie wymieniać członków partii spełniających wymagania z art. 5 rozdziału II oraz może dokonać maksymalnie 3 zmian dziennie.</p>
-        <p class="artykul-p"><strong>Art. 6.</strong> I Sekretarz nie może sam mianować się administratorem.</p>
-        <p class="artykul-p"><strong>Art. 7.</strong> Jeśli I Sekretarz nie jest pewny podjęcia decyzji lub chce, by zdecydował lud, może zorganizować referendum ogólnoserwerowe (referendum nie może dotyczyć ustawy ani zmiany konstytucji).</p>
-        <p class="artykul-p"><strong>Art. 8.</strong> I Sekretarz może zostać odwołany głosem ponad 3/4 obywateli w ogólnoserwerowym głosowaniu.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> I Sekretarz ma prawo złożyć rezygnację w dowolnym momencie.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> I Sekretarz wybierany jest w głosowaniu ogólnoserwerowym.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Obowiązki I Sekretarza obejmują:</p>
+        <ul class="podpunkt-lista">
+          <li>organizowanie głosowań nad złożonymi wnioskami i ustawami,</li>
+          <li>wprowadzanie zmian organizacyjnych za pośrednictwem Administracji,</li>
+          <li>koordynowanie bieżącej pracy Administracji.</li>
+        </ul>
+        <p class="artykul-p"><strong>Art. 5.</strong> I Sekretarz ma prawo wymieniać członków Partii spełniających wymogi z Art. 5 Rozdziału II, dokonując maksymalnie 3 zmian dziennie.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> I Sekretarz nie może samodzielnie mianować się Administratorem.</p>
+        <p class="artykul-p"><strong>Art. 7.</strong> W sprawach kluczowych I Sekretarz może zorganizować referendum ogólnoserwerowe (referendum nie może dotyczyć przyjęcia ustawy ani zmiany Konstytucji).</p>
+        <p class="artykul-p"><strong>Art. 8.</strong> I Sekretarz może zostać odwołany większością ponad ¾ głosów obywateli w głosowaniu ogólnoserwerowym.</p>
       </div>
 
       <!-- ROZDZIAŁ 4 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">4. II Sekretarz[cite: 8]</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> II Sekretarza mianuje I Sekretarz jako swojego zastępcę.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Gdy I Sekretarz jest nieobecny, II Sekretarz zajmuje jego pozycję do czasu powrotu I Sekretarza.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Gdy I Sekretarz zrezygnuje, II Sekretarz automatycznie staje się I Sekretarzem i wybiera nowego zastępcę.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> I Sekretarz nie może zmienić II Sekretarza przez 20 dni od jego wyboru.</p>
-        <p class="artykul-p"><strong>Art. 5.</strong> II Sekretarz jest zobowiązany do: a) koordynowania pracy ZOMO, b) pilnowania, by regulamin był przestrzegany na serwerze.</p>
-        <p class="artykul-p"><strong>Art. 6.</strong> II Sekretarz nie może sam mianować się członkiem ZOMO.</p>
+        <h2 class="rozdzialtytul">Rozdział IV. II Sekretarz</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> II Sekretarza mianuje I Sekretarz jako swojego oficjalnego zastępcę.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Podczas nieobecności I Sekretarza, II Sekretarz przejmuje jego obowiązki do czasu powrotu przełożonego.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> W przypadku rezygnacji I Sekretarza, II Sekretarz automatycznie obejmuje stanowisko I Sekretarza i wyznacza swojego nowego zastępcę.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> I Sekretarz nie może odwołać II Sekretarza przez okres 20 dni od dnia jego powołania.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> Obowiązki II Sekretarza obejmują:</p>
+        <ul class="podpunkt-lista">
+          <li>koordynowanie działań i pracy formacji ZOMO,</li>
+          <li>nadzorowanie przestrzegania Regulaminu na serwerze.</li>
+        </ul>
+        <p class="artykul-p"><strong>Art. 6.</strong> II Sekretarz nie może samodzielnie mianować się członkiem ZOMO.</p>
       </div>
 
       <!-- ROZDZIAŁ 5 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">5. ZOMO</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> ZOMO powołuje II Sekretarz po objęciu stanowiska.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> ZOMO mogą zostać tylko członkowie partii.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> ZOMO jest zobowiązane do: a) pilnowania przestrzegania regulaminu, b) tworzenia ankiet min. raz na 2 tygodnie.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli członek ZOMO będzie nadużywać swoich uprawnień, może dostać karę bez ostrzeżenia.</p>
+        <h2 class="rozdzialtytul">Rozdział V. ZOMO</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Skład ZOMO powołuje II Sekretarz po objęciu urzędu.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Do formacji ZOMO mogą zostać powołani wyłącznie członkowie Partii.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> ZOMO zobowiązane jest do:</p>
+        <ul class="podpunkt-lista">
+          <li>czuwania nad przestrzeganiem Regulaminu serwera,</li>
+          <li>tworzenia ankiet społecznych minimum raz na 2 tygodnie.</li>
+        </ul>
+        <p class="artykul-p"><strong>Art. 4.</strong> W przypadku nadużycia uprawnień przez członka ZOMO, zostanie na niego nałożona kara bez wcześniejszego ostrzeżenia.</p>
       </div>
 
       <!-- ROZDZIAŁ 6 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">6. Administracja</h2>
+        <h2 class="rozdzialtytul">Rozdział VI. Administracja</h2>
         <p class="artykul-p"><strong>Art. 1.</strong> Administrację powołuje I Sekretarz na początku swojej kadencji.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Administratorami mogą zostać tylko członkowie partii.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Administracja jest zobowiązana do: a) wprowadzania przegłosowanych ustaw i wniosków, b) wykonywania poleceń I Sekretarza.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli członek administracji będzie nadużywać swoich uprawnień, może dostać karę bez ostrzeżenia lub, gdy przewinienia będą poważne, może zostać zastosowany ban.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Funkcję Administratora mogą sprawować wyłącznie członkowie Partii.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Administracja zobowiązana jest do:</p>
+        <ul class="podpunkt-lista">
+          <li>wdrażania przegłosowanych ustaw oraz zaakceptowanych wniosków,</li>
+          <li>sprawnego wykonywania poleceń I Sekretarza.</li>
+        </ul>
+        <p class="artykul-p"><strong>Art. 4.</strong> Za nadużycie uprawnień grozi kara natychmiastowa bez ostrzeżenia, a w przypadku rażących przewinień — wykluczenie z serwera (ban).</p>
       </div>
 
       <!-- ROZDZIAŁ 7 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">7. Założyciel Serwera</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Założyciel serwera jest jednocześnie prezesem banku.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Założyciel serwera nie może zostać I ani II Sekretarzem.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Kiedy założyciel widzi łamanie konstytucji/regulaminu, może od razu zastosować karę.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli założyciel serwera zauważy, że władza stwarza zagrożenie zniszczenia serwera lub jego mocnego osłabienia, może ją usunąć — musi jednak mieć do tego powód.</p>
-        <p class="artykul-p"><strong>Art. 5.</strong> Założyciel serwera klasyfikuje ustawy, wnioski i zmiany konstytucji.</p>
+        <h2 class="rozdzialtytul">Rozdział VII. Założyciel Serwera</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Założyciel Serwera sprawuje jednocześnie funkcję Prezesa Banku.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Założyciel Serwera nie może ubiegać się ani piastować stanowiska I lub II Sekretarza.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> W przypadku stwierdzenia bezpośredniego łamania Konstytucji lub Regulaminu, Założyciel ma prawo do natychmiastowego wyciągnięcia konsekwencji.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Jeśli działania organów władzy stwarzają uzasadnione zagrożenie zniszczenia lub znacznego osłabienia serwera, Założyciel ma prawo odwołać daną władzę po podaniu formalnego powodu.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> Założyciel Serwera dokonuje klasyfikacji składanych ustaw, wniosków i propozycji zmian w Konstytucji.</p>
       </div>
 
       <!-- ROZDZIAŁ 8 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">8. Ustawy</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Ustawy i wnioski mogą składać wyłącznie członkowie partii i opozycji.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Wnioski są rozpatrywane przez I Sekretarza bez głosowań.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Złożona ustawa musi najpierw zostać sprawdzona pod kątem zgodności z konstytucją i sklasyfikowana jako ustawa przez założyciela serwera, a dopiero potem dopuszczona do głosowania.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Gdy ustawa jest dopuszczona do głosowania, I Sekretarz organizuje 24-godzinne głosowanie, w którym wygrywa opcja zaznaczona przez większość członków partii.</p>
-        <p class="artykul-p"><strong>Art. 5.</strong> W sytuacji remisu w głosowaniu I Sekretarz podejmuje decyzję, czy ustawa przeszła.</p>
-        <p class="artykul-p"><strong>Art. 6.</strong> Gdy ustawa przejdzie głosowanie, I Sekretarz może ją przyjąć i wdrożyć najszybciej jak to możliwe lub zawetować i cofnąć do głosowania, gdzie aby przejść, musi uzyskać ponad 2/3 głosów.</p>
-        <p class="artykul-p"><strong>Art. 7.</strong> Wniosek to: 1) zgłoszenie nieprawidłowego zachowania administracji, ZOMO, I lub II Sekretarza lub innego członka serwera, 2) propozycja małej zmiany (np. zmiana nazwy kanału, dodanie emotki, naklejki itp.).</p>
-        <p class="artykul-p"><strong>Art. 8.</strong> Ustawa to propozycja większych zmian dotyczących regulaminu, ekonomii, dodania nowego kanału, nowego bota itp.</p>
+        <h2 class="rozdzialtytul">Rozdział VIII. Ustawy i Wnioski</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Inicjatywa ustawodawcza oraz prawo do składania wniosków przysługują członkom Partii oraz Opozycji.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Wnioski rozpatrywane są bezpośrednio przez I Sekretarza bez konieczności przeprowadzania głosowania.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Przed poddaniem pod głosowanie, projekt ustawy podlega weryfikacji pod kątem zgodności z Konstytucją oraz oficjalnej klasyfikacji przez Założyciela Serwera.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Po zakwalifikowaniu ustawy, I Sekretarz zarządza 24-godzinne głosowanie. Ustawę uważa się za przyjętą, gdy opowie się za nią większość głosujących członków Partii.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> W przypadku równej liczby głosów (remisu), o przyjęciu ustawy decyduje I Sekretarz.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> Po przyjęciu ustawy w głosowaniu, I Sekretarz może ją podpisując wdrożyć lub zgłosić weto. Weto I Sekretarza zostaje odrzucone, jeśli w ponownym głosowaniu ustawa uzyska co najmniej ⅔ głosów.</p>
+        <p class="artykul-p"><strong>Art. 7. Definicja Wniosku:</strong> Wnioskiem jest zgłoszenie nieprawidłowości w zachowaniu organów władzy lub propozycja drobnej zmiany kosmetycznej (np. zmiana nazwy kanału, dodanie emotek/naklejek).</p>
+        <p class="artykul-p"><strong>Art. 8. Definicja Ustawy:</strong> Ustawą jest propozycja istotnych zmian w Regulaminie, ekonomii serwera, strukturze kanałów lub wprowadzania nowych botów i funkcji.</p>
       </div>
 
       <!-- ROZDZIAŁ 9 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">9. Wybory</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Wybory na I Sekretarza organizuje założyciel serwera.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> O stanowisko I Sekretarza mogą ubiegać się tylko członkowie partii.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Kandydaci muszą umieścić swoje programy wyborcze na odpowiednim kanale w określony dzień, inaczej zostaną usunięci z kandydatury.</p>
-        <p class="artykul-p"><strong>Art. 4.</strong> Gdy kandydat w I turze dostanie więcej niż 50% głosów, wygrywa wybory automatycznie.</p>
-        <p class="artykul-p"><strong>Art. 5.</strong> Gdy w I turze jest remis uniemożliwiający organizację II tury z 2 kandydatami, organizowana jest przejściowa II tura, która decyduje o tym, kto przejdzie do III tury.</p>
-        <p class="artykul-p"><strong>Art. 6.</strong> Jeśli kandydat zrezygnuje w trakcie wyborów, jego głosy są nieważne już od I tury, co może całkowicie odwrócić bieg wyborów.</p>
+        <h2 class="rozdzialtytul">Rozdział IX. Wybory</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Wybory na stanowisko I Sekretarza zarządza i przeprowadza Założyciel Serwera.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Kandydować na stanowisko I Sekretarza mogą wyłącznie członkowie Partii.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Kandydaci zobowiązani są do zaprezentowania swoich programów wyborczych na dedykowanym kanale w wyznaczonym terminie pod rygorem skreślenia z listy kandydatów.</p>
+        <p class="artykul-p"><strong>Art. 4.</strong> Kandydat, który w I turze uzyska ponad 50% oddanych głosów, zostaje ogłoszony zwycięzcą wyborów.</p>
+        <p class="artykul-p"><strong>Art. 5.</strong> W przypadku remisu uniemożliwiającego wyłonienie dwóch kandydatów do II tury, przeprowadza się dogrywkę rozstrzygającą awans.</p>
+        <p class="artykul-p"><strong>Art. 6.</strong> Rezygnacja kandydata w trakcie trwania wyborów unieważnia wszystkie oddane na niego głosy od I tury.</p>
       </div>
 
       <!-- ROZDZIAŁ 10 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">10. Order Orła Czerwonego</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Order Orła Czerwonego to najwyższe odznaczenie na serwerze.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Order Orła Czerwonego może nadawać tylko założyciel serwera za szczególne i uzasadnione zasługi, jednak na nadanie muszą wyrazić zgodę I i II Sekretarz.</p>
-        <p class="artykul-p"><strong>Art. 3.</strong> Order Orła Czerwonego może zostać odebrany tylko wtedy, gdy zgodzą się na to Założyciel oraz I i II Sekretarz.</p>
+        <h2 class="rozdzialtytul">Rozdział X. Order Orła Czerwonego</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Order Orła Czerwonego stanowi najwyższe odznaczenie państwowe na serwerze.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Order nadaje Założyciel Serwera za wybitne zasługi, po uzyskaniu akceptacji I oraz II Sekretarza.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Pozbawienie odznaczenia może nastąpić wyłącznie za zgodą Założyciela Serwera, I Sekretarza oraz II Sekretarza.</p>
       </div>
 
       <!-- ROZDZIAŁ 11 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">11. Zmiana Konstytucji</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Propozycje zmiany konstytucji mogą złożyć tylko członkowie partii i opozycji.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Po sklasyfikowaniu propozycji jako zmiany konstytucji przez założyciela serwera, I Sekretarz jest zobowiązany zorganizować głosowanie, w którym potrzeba powyżej 4/5 głosów za, by zmiana przeszła — wtedy I Sekretarz nie może jej zawetować, a zmiana wchodzi w życie od następnego poniedziałku po przyjęciu.</p>
+        <h2 class="rozdzialtytul">Rozdział XI. Zmiana Konstytucji</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Inicjatywa zmiany Konstytucji przysługuje członkom Partii oraz Opozycji.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Po sklasyfikowaniu projektu przez Założyciela Serwera, I Sekretarz przeprowadza głosowanie. Do uchwalenia zmiany Konstytucji wymagana jest większość co najmniej ⅘ głosów (80%). Zmiana Konstytucji nie podlega prawu weta I Sekretarza i wchodzi w życie od pierwszego poniedziałku po głosowaniu.</p>
       </div>
 
       <!-- ROZDZIAŁ 12 -->
       <div class="rozdzial-karta">
-        <h2 class="rozdzialtytul">12. Przepisy końcowe</h2>
-        <p class="artykul-p"><strong>Art. 1.</strong> Konstytucja zaczyna obowiązywać na serwerach PRL 3 i nowszych (jeśli takie będą) od 01.09.2026 r.</p>
-        <p class="artykul-p"><strong>Art. 2.</strong> Do aktualizacji konstytucji mają dostęp tylko Maloy i Krzychu Bluetesowicz.</p>
+        <h2 class="rozdzialtytul">Rozdział XII. Przepisy Końcowe</h2>
+        <p class="artykul-p"><strong>Art. 1.</strong> Niniejsza Konstytucja obowiązuje na serwerach z serii PRL od dnia 1 września 2026 r.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Wyłączne prawo do wprowadzania autoryzowanych zmian i edycji tekstu niniejszego dokumentu posiadają Maloy oraz Bluetes.</p>
       </div>
 
     </section>
@@ -341,7 +390,7 @@
     <div class="stopka">
       <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a>
       <br>
-      Rzeczpospolita PRL — Konstytucja oficjalna
+      Rzeczpospolita PRL — Wydział Prawno-Administracyjny
     </div>
 
   </div>
