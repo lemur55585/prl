@@ -9,7 +9,7 @@ const dataKoncaKadencji2   = "2026-10-31T23:59:59";
 
 // --- BAZA PRAWNA ---
 const nazwaKonstytucjiTekst   = "Konstytucja PRL z 2026";
-const dataNowelizacjiTekst    = "01.08.2026";
+const dataNowelizacjiTekst    = "19.10.2026";
 const statusPrawnyAktywny     = true;
 const czyTrwaGlosowanie       = false;
 
