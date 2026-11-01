@@ -8,13 +8,6 @@ const dataKoncaKadencji1   = "2026-12-31T23:59:59";
 const nazwaSekretarza2     = "Eko";
 const dataStartuKadencji2  = "2026-11-01T00:00:00";
 const dataKoncaKadencji2   = "2026-11-30T23:59:59";
-
-// II Sekretarz (Grudzień) 
-// UWAGA: Jeśli kod strony wymaga nazwy "Sekretarza2", 1 grudnia podmień wartości wyżej na te poniżej:
-const nazwaSekretarza3     = "Lemur";
-const dataStartuKadencji3  = "2026-12-01T00:00:00";
-const dataKoncaKadencji3   = "2026-12-31T23:59:59";
-
 // --- BAZA PRAWNA ---
 const nazwaKonstytucjiTekst   = "Konstytucja PRL z 2026";
 const dataNowelizacjiTekst    = "01.08.2026";
