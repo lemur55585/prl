@@ -1,7 +1,7 @@
 // --- STANOWISKA I KADENCJE ---
 const nazwaSekretarza1     = "Pax";
-const dataStartuKadencji1  = "2026-09-05T00:00:00";
-const dataKoncaKadencji1   = "2026-10-31T23:59:59";
+const dataStartuKadencji1  = "2026-11-01T00:00:00";
+const dataKoncaKadencji1   = "2026-12-31T23:59:59";
 
 const nazwaSekretarza2     = "Devon";
 const dataStartuKadencji2  = "2026-09-05T00:00:00";
