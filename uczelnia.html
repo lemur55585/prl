@@ -18,226 +18,75 @@
     --zloto-jasne: #e3c878;
     --tekst: #ede7d9;
     --tekst-przygaszony: #9a9284;
+    --zielony: #4caf6d;
   }
-
   *{ box-sizing: border-box; margin:0; padding:0; }
-
-  body{
-    background: var(--tlo);
-    color: var(--tekst);
-    font-family: 'PT Sans', sans-serif;
-    line-height: 1.55;
-    min-height: 100vh;
-  }
-
-  h1, h2, h3, .naglowek-tytul{
-    font-family: 'Oswald', sans-serif;
-    letter-spacing: 0.02em;
-  }
-
-  .kontener{
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-  }
+  body{ background: var(--tlo); color: var(--tekst); font-family: 'PT Sans', sans-serif; line-height: 1.55; min-height: 100vh; }
+  h1, h2, h3, .naglowek-tytul{ font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  .kontener{ max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
 
   /* NAGŁÓWEK */
-  .naglowek{
-    position: relative;
-    text-align: center;
-    padding: 56px 20px 40px;
-    border-bottom: 3px solid var(--czerwien);
-    background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%);
-    overflow: hidden;
-  }
-
-  .naglowek::before{
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien));
-  }
-
-  .gwiazda{
-    font-size: 28px;
-    color: var(--zloto);
-    display: block;
-    margin-bottom: 14px;
-  }
-
-  .naglowek-tytul{
-    font-size: clamp(26px, 5vw, 38px);
-    font-weight: 700;
-    color: var(--tekst);
-    text-transform: uppercase;
-  }
-
-  .naglowek-podtytul{
-    margin-top: 10px;
-    font-size: clamp(13px, 2.2vw, 16px);
-    color: var(--zloto-jasne);
-    font-family: 'Oswald', sans-serif;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  .naglowek{ position: relative; text-align: center; padding: 56px 20px 40px; border-bottom: 3px solid var(--czerwien); background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%); overflow: hidden; }
+  .naglowek::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien)); }
+  .gwiazda{ font-size: 28px; color: var(--zloto); display: block; margin-bottom: 14px; }
+  .naglowek-tytul{ font-size: clamp(26px, 5vw, 38px); font-weight: 700; color: var(--tekst); text-transform: uppercase; }
+  .naglowek-podtytul{ margin-top: 10px; font-size: clamp(13px, 2.2vw, 16px); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
 
   /* NAWIGACJA */
-  .zakladki{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 24px;
-    padding: 0 20px;
-  }
+  .zakladki{ display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 24px; padding: 0 20px; }
+  .zakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 15px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); text-decoration: none; display: inline-block; transition: all 0.2s ease; }
+  .zakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
+  .zakladka.aktywna{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border-color: var(--czerwien-jasna); color: #fff; }
 
-  .zakladka{
-    font-family: 'Oswald', sans-serif;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 10px 22px;
-    background: var(--tlo-karta);
-    border: 1px solid var(--linia);
-    border-radius: 4px;
-    color: var(--tekst-przygaszony);
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s ease;
-  }
-
-  .zakladka:hover{
-    color: var(--tekst);
-    border-color: var(--zloto);
-  }
-
-  .zakladka.aktywna{
-    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
-    border-color: var(--czerwien-jasna);
-    color: #fff;
-  }
-
-  /* SEKCJA WYKŁADOWCY */
+  /* SEKCJE */
   .sekcja{ margin-top: 40px; }
+  .sekcja-tytul{ font-size: 14px; font-weight: 600; color: var(--zloto); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--linia); }
 
-  .sekcja-tytul{
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--zloto);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--linia);
-  }
-
-  .siatka-wykladowcy{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-  }
-
-  .karta-wykladowcy{
-    background: var(--tlo-karta);
-    border: 1px solid var(--linia);
-    border-radius: 6px;
-    padding: 24px;
-    position: relative;
-    transition: border-color 0.2s ease;
-  }
-
-  .karta-wykladowcy:hover{
-    border-color: var(--zloto);
-  }
-
-  .karta-wykladowcy::before{
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--czerwien);
-    border-radius: 6px 0 0 6px;
-  }
-
-  .naglowek-wykladowcy{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--linia);
-  }
-
-  .ikona-wykladowcy{
-    font-size: 26px;
-    color: var(--zloto);
-  }
-
-  .imie-wykladowcy{
-    font-family: 'Oswald', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--tekst);
-    text-transform: uppercase;
-  }
-
-  .etykieta-przedmioty{
-    font-size: 12px;
-    color: var(--tekst-przygaszony);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 10px;
-  }
-
-  .lista-przedmiotow{
-    list-style: none;
-  }
-
-  .lista-przedmiotow li{
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: var(--zloto-jasne);
-    font-weight: 700;
-  }
-
-  .lista-przedmiotow li::before{
-    content: "★";
-    position: absolute;
-    left: 0;
-    color: var(--czerwien-jasna);
-    font-size: 12px;
-  }
+  .karta{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 24px; position: relative; }
+  .karta::before{ content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--czerwien); border-radius: 6px 0 0 6px; }
+  .artykul-p{ margin-top: 10px; font-size: 14px; color: var(--tekst); }
+  .artykul-p:first-of-type{ margin-top: 0; }
+  .artykul-p strong{ color: var(--zloto); font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
 
   /* STOPKA */
-  .stopka{
-    margin-top: 60px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--tekst-przygaszony);
-    padding-top: 24px;
-    border-top: 1px solid var(--linia);
-  }
+  .stopka{ margin-top: 60px; text-align: center; font-size: 12px; color: var(--tekst-przygaszony); padding-top: 24px; border-top: 1px solid var(--linia); }
+  .przycisk-discord{ display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px 22px; background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border: 1px solid var(--czerwien-jasna); border-radius: 4px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: opacity 0.2s ease; }
+  .przycisk-discord:hover{ opacity: 0.85; }
 
-  .przycisk-discord{
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    padding: 10px 22px;
-    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
-    border: 1px solid var(--czerwien-jasna);
-    border-radius: 4px;
-    color: #fff;
-    font-family: 'Oswald', sans-serif;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-  }
+  /* STATYSTYKI */
+  .statystyki{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .stat{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 16px; text-align: center; }
+  .stat-liczba{ font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 700; color: var(--zloto-jasne); line-height: 1.1; }
+  .stat-etykieta{ margin-top: 4px; font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; }
+  @media (max-width: 480px){ .stat-liczba{ font-size: 26px; } .stat{ padding: 12px 8px; } .stat-etykieta{ font-size: 10px; } }
+
+  /* PODZAKŁADKI */
+  .podzakladki{ display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--linia); }
+  .podzakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 9px 18px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); cursor: pointer; transition: all 0.2s ease; }
+  .podzakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
+  .podzakladka.aktywna{ color: var(--zloto-jasne); border-color: var(--zloto); background: rgba(201,168,76,0.10); }
+  .podzakladka .ile{ margin-left: 6px; color: var(--czerwien-jasna); }
+  .panel{ display: none; }
+  .panel.aktywny{ display: block; }
+
+  /* KARTY OSÓB / PRZEDMIOTÓW */
+  .siatka-kart{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .karta-osoby{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 24px; position: relative; transition: border-color 0.2s ease; }
+  .karta-osoby:hover{ border-color: var(--zloto); }
+  .karta-osoby::before{ content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--czerwien); border-radius: 6px 0 0 6px; }
+  .osoba-gora{ display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--linia); }
+  .osoba-ikona{ font-size: 26px; color: var(--zloto); }
+  .osoba-imie{ font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: var(--tekst); text-transform: uppercase; overflow-wrap: anywhere; }
+  .osoba-etykieta{ margin-left: auto; font-size: 11px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid var(--linia); border-radius: 4px; padding: 2px 8px; white-space: nowrap; }
+  .osoba-podpis{ font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .osoba-stanowisko{ font-size: 15px; color: var(--zloto-jasne); font-weight: 700; }
+  .lista-gwiazdek{ list-style: none; }
+  .lista-gwiazdek li{ position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 14px; color: var(--zloto-jasne); font-weight: 700; }
+  .lista-gwiazdek li::before{ content: "★"; position: absolute; left: 0; color: var(--czerwien-jasna); font-size: 12px; }
+  .przedmiot-nazwa{ font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 600; color: var(--tekst); margin-bottom: 8px; }
+  .przedmiot-prowadzacy{ font-size: 14px; color: var(--zloto-jasne); }
+  .brak-danych{ padding: 28px 22px; text-align: center; color: var(--tekst-przygaszony); font-style: italic; background: var(--tlo-karta); border: 1px dashed var(--linia); border-radius: 6px; }
+  .blad-danych{ padding: 16px 20px; border: 1px solid var(--czerwien-jasna); background: rgba(216,30,58,0.08); border-radius: 6px; color: var(--tekst); font-size: 14px; }
 </style>
 </head>
 <body>
@@ -245,7 +94,7 @@
   <header class="naglowek">
     <span class="gwiazda">★</span>
     <h1 class="naglowek-tytul">Uczelnia PRL</h1>
-    <p class="naglowek-podtytul">Spis Wykładowców i Kadr Naukowych</p>
+    <p class="naglowek-podtytul">Zarząd Uczelni, Wykładowcy i Przedmioty</p>
   </header>
 
   <nav class="zakladki">
@@ -254,54 +103,31 @@
     <a class="zakladka aktywna" href="uczelnia.html">Uczelnia</a>
     <a class="zakladka" href="konstytucja.html">Konstytucja</a>
     <a class="zakladka" href="sekretarze.html">Spis sekretarzy</a>
+    <a class="zakladka" href="order.html">Order Orła Czerwonego</a>
+    <a class="zakladka" href="ai-detektor.html">AI Detector</a>
   </nav>
 
   <div class="kontener">
-    <section class="sekcja">
-      <div class="sekcja-tytul">Spis Wykładowców</div>
-      <div class="siatka-wykladowcy">
+    <div class="blad-danych" id="bladDanych" style="display:none;">Nie udało się wczytać pliku <strong>stanowiska.js</strong>. Sprawdź, czy leży w tym samym folderze co ta strona.</div>
 
-        <!-- Lemur -->
-        <div class="karta-wykladowcy">
-          <div class="naglowek-wykladowcy">
-            <span class="ikona-wykladowcy">📚</span>
-            <div class="imie-wykladowcy">Lemur</div>
-          </div>
-          <div class="etykieta-przedmioty">Prowadzone przedmioty:</div>
-          <ul class="lista-przedmiotow">
-            <li>Fizyka</li>
-            <li>Informatyka</li>
-          </ul>
-        </div>
-
-        <!-- Bluetes -->
-        <div class="karta-wykladowcy">
-          <div class="naglowek-wykladowcy">
-            <span class="ikona-wykladowcy">📜</span>
-            <div class="imie-wykladowcy">Bluetes</div>
-          </div>
-          <div class="etykieta-przedmioty">Prowadzone przedmioty:</div>
-          <ul class="lista-przedmiotow">
-            <li>Historia</li>
-          </ul>
-        </div>
-
-        <!-- Hirohito -->
-        <div class="karta-wykladowcy">
-          <div class="naglowek-wykladowcy">
-            <span class="ikona-wykladowcy">⚛️</span>
-            <div class="imie-wykladowcy">Hirohito</div>
-          </div>
-          <div class="etykieta-przedmioty">Prowadzone przedmioty:</div>
-          <ul class="lista-przedmiotow">
-            <li>Chemia</li>
-            <li>Matematyka</li>
-            <li>Fizyka Jądrowa</li>
-            <li>Fizyka Kwantowa</li>
-          </ul>
-        </div>
-
+    <section class="sekcja" id="sekcjaStatystyk">
+      <div class="statystyki">
+        <div class="stat"><div class="stat-liczba" id="statZarzadcy">0</div><div class="stat-etykieta">Zarządców</div></div>
+        <div class="stat"><div class="stat-liczba" id="statWykladowcy">0</div><div class="stat-etykieta">Wykładowców</div></div>
+        <div class="stat"><div class="stat-liczba" id="statPrzedmioty">0</div><div class="stat-etykieta">Przedmiotów</div></div>
       </div>
+    </section>
+
+    <section class="sekcja">
+      <div class="podzakladki" role="tablist">
+        <button class="podzakladka" type="button" role="tab" data-panel="zarzadcy">Zarządcy Uczelni<span class="ile" id="ileZarzadcy"></span></button>
+        <button class="podzakladka" type="button" role="tab" data-panel="wykladowcy">Wykładowcy<span class="ile" id="ileWykladowcy"></span></button>
+        <button class="podzakladka" type="button" role="tab" data-panel="przedmioty">Przedmioty<span class="ile" id="ilePrzedmioty"></span></button>
+      </div>
+
+      <div class="panel" id="panel-zarzadcy" role="tabpanel"><div class="siatka-kart" id="listaZarzadcy"></div></div>
+      <div class="panel" id="panel-wykladowcy" role="tabpanel"><div class="siatka-kart" id="listaWykladowcy"></div></div>
+      <div class="panel" id="panel-przedmioty" role="tabpanel"><div class="siatka-kart" id="listaPrzedmioty"></div></div>
     </section>
 
     <div class="stopka">
@@ -311,5 +137,135 @@
     </div>
   </div>
 
+<script src="stanowiska.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  // Pomocnik: tworzy element z tekstem (textContent, więc bez ryzyka wstrzyknięcia HTML)
+  function el(tag, klasa, tekst){
+    var e = document.createElement(tag);
+    if (klasa) e.className = klasa;
+    if (tekst !== undefined && tekst !== null) e.textContent = tekst;
+    return e;
+  }
+
+  function pokazBrak(kontener, tekst){
+    kontener.className = "";
+    kontener.appendChild(el("div", "brak-danych", tekst));
+  }
+
+  // ----- wczytanie danych z stanowiska.js -----
+  var daneOk = (typeof listaWykladowcow !== "undefined") && (typeof listaZarzadcowUczelni !== "undefined");
+  if (!daneOk) {
+    document.getElementById("bladDanych").style.display = "block";
+    document.getElementById("sekcjaStatystyk").style.display = "none";
+    return;
+  }
+
+  var zarzadcy = listaZarzadcowUczelni.slice();
+  var wykladowcy = listaWykladowcow.map(function(w){
+    var przedmioty = Array.isArray(w.przedmioty) ? w.przedmioty
+      : String(w.powod || "").split(",").map(function(s){ return s.trim(); }).filter(Boolean);
+    return { imie: w.imie, przedmioty: przedmioty, etykieta: w.data || "Wykładowca", ikona: w.ikona || "🎓" };
+  });
+
+  // Przedmioty budowane automatycznie z listy wykładowców: przedmiot -> kto prowadzi
+  var mapaPrzedmiotow = new Map();
+  wykladowcy.forEach(function(w){
+    w.przedmioty.forEach(function(p){
+      if (!mapaPrzedmiotow.has(p)) mapaPrzedmiotow.set(p, []);
+      mapaPrzedmiotow.get(p).push(w.imie);
+    });
+  });
+  var przedmioty = Array.from(mapaPrzedmiotow.keys()).sort(function(a, b){ return a.localeCompare(b, "pl"); });
+
+  // ----- statystyki i liczniki na zakładkach -----
+  document.getElementById("statZarzadcy").textContent = zarzadcy.length;
+  document.getElementById("statWykladowcy").textContent = wykladowcy.length;
+  document.getElementById("statPrzedmioty").textContent = przedmioty.length;
+  document.getElementById("ileZarzadcy").textContent = "(" + zarzadcy.length + ")";
+  document.getElementById("ileWykladowcy").textContent = "(" + wykladowcy.length + ")";
+  document.getElementById("ilePrzedmioty").textContent = "(" + przedmioty.length + ")";
+
+  // ----- panel: Zarządcy -----
+  var kZarzadcy = document.getElementById("listaZarzadcy");
+  if (!zarzadcy.length) {
+    pokazBrak(kZarzadcy, "Brak zarządców. Wydział nieobsadzony.");
+  } else {
+    zarzadcy.forEach(function(z){
+      var karta = el("div", "karta-osoby");
+      var gora = el("div", "osoba-gora");
+      gora.appendChild(el("span", "osoba-ikona", z.ikona || "🏛️"));
+      gora.appendChild(el("div", "osoba-imie", z.imie));
+      if (z.data) gora.appendChild(el("span", "osoba-etykieta", z.data));
+      karta.appendChild(gora);
+      karta.appendChild(el("div", "osoba-podpis", "Stanowisko:"));
+      karta.appendChild(el("div", "osoba-stanowisko", z.powod || "—"));
+      kZarzadcy.appendChild(karta);
+    });
+  }
+
+  // ----- panel: Wykładowcy -----
+  var kWykladowcy = document.getElementById("listaWykladowcy");
+  if (!wykladowcy.length) {
+    pokazBrak(kWykladowcy, "Brak wykładowców.");
+  } else {
+    wykladowcy.forEach(function(w){
+      var karta = el("div", "karta-osoby");
+      var gora = el("div", "osoba-gora");
+      gora.appendChild(el("span", "osoba-ikona", w.ikona));
+      gora.appendChild(el("div", "osoba-imie", w.imie));
+      karta.appendChild(gora);
+      karta.appendChild(el("div", "osoba-podpis", "Prowadzone przedmioty:"));
+      var ul = el("ul", "lista-gwiazdek");
+      w.przedmioty.forEach(function(p){ ul.appendChild(el("li", null, p)); });
+      karta.appendChild(ul);
+      kWykladowcy.appendChild(karta);
+    });
+  }
+
+  // ----- panel: Przedmioty -----
+  var kPrzedmioty = document.getElementById("listaPrzedmioty");
+  if (!przedmioty.length) {
+    pokazBrak(kPrzedmioty, "Brak przedmiotów.");
+  } else {
+    przedmioty.forEach(function(p){
+      var karta = el("div", "karta-osoby");
+      karta.appendChild(el("div", "przedmiot-nazwa", p));
+      karta.appendChild(el("div", "osoba-podpis", "Prowadzi:"));
+      karta.appendChild(el("div", "przedmiot-prowadzacy", mapaPrzedmiotow.get(p).join(", ")));
+      kPrzedmioty.appendChild(karta);
+    });
+  }
+
+  // ----- przełączanie podzakładek (z obsługą #hash w adresie) -----
+  var przyciski = document.querySelectorAll(".podzakladka");
+  var panele = document.querySelectorAll(".panel");
+  var DOMYSLNA = "wykladowcy";
+
+  function pokaz(nazwa){
+    var istnieje = false;
+    przyciski.forEach(function(b){ if (b.dataset.panel === nazwa) istnieje = true; });
+    if (!istnieje) nazwa = DOMYSLNA;
+    przyciski.forEach(function(b){
+      var aktywny = b.dataset.panel === nazwa;
+      b.classList.toggle("aktywna", aktywny);
+      b.setAttribute("aria-selected", aktywny ? "true" : "false");
+    });
+    panele.forEach(function(p){ p.classList.toggle("aktywny", p.id === "panel-" + nazwa); });
+  }
+
+  przyciski.forEach(function(b){
+    b.addEventListener("click", function(){
+      pokaz(b.dataset.panel);
+      if (history.replaceState) history.replaceState(null, "", "#" + b.dataset.panel);
+    });
+  });
+
+  pokaz(location.hash.replace("#", "") || DOMYSLNA);
+  window.addEventListener("hashchange", function(){ pokaz(location.hash.replace("#", "")); });
+})();
+</script>
 </body>
 </html>
