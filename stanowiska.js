@@ -25,28 +25,17 @@ const listaOdznaczonychObywateli = [
 ];
 
 // --- ZARZĄDCY UCZELNI ---
+// Każdy wpis: { imie: "...", powod: "stanowisko", data: "etykieta/data (opcjonalnie)", ikona: "emoji (opcjonalnie)" }
+// Pusta lista [] = strona pokaże "Wydział nieobsadzony".
 const listaZarzadcowUczelni = [
-  { imie: "Brak zarządców", powod: "Wydział nieobsadzony.", data: "" }
+  // { imie: "Imię", powod: "Rektor Uczelni", data: "", ikona: "🏛️" },
 ];
 
 // --- WYKŁADOWCY ---
+// Każdy wpis: { imie, przedmioty: [lista], data: "etykieta", ikona: "emoji (opcjonalnie)" }
+// Przedmioty wpisujesz tylko w tablicy "przedmioty" - zakładka "Przedmioty" tworzy się sama.
 const listaWykladowcow = [
-  { 
-    imie: "Lemur", 
-    przedmioty: ["Fizyka", "Informatyka"], 
-    powod: "Fizyka, Informatyka", 
-    data: "Wykładowca" 
-  },
-  { 
-    imie: "Bluetes", 
-    przedmioty: ["Historia"], 
-    powod: "Historia", 
-    data: "Wykładowca" 
-  },
-  { 
-    imie: "Hirohito", 
-    przedmioty: ["Chemia", "Matematyka", "Fizyka Jądrowa", "Fizyka Kwantowa"], 
-    powod: "Chemia, Matematyka, Fizyka Jądrowa, Fizyka Kwantowa", 
-    data: "Wykładowca" 
-  }
+  { imie: "Lemur",    przedmioty: ["Fizyka", "Informatyka"],                                  data: "Wykładowca", ikona: "📚" },
+  { imie: "Bluetes",  przedmioty: ["Historia"],                                               data: "Wykładowca", ikona: "📜" },
+  { imie: "Hirohito", przedmioty: ["Chemia", "Matematyka", "Fizyka Jądrowa", "Fizyka Kwantowa"], data: "Wykładowca", ikona: "⚛️" }
 ];
