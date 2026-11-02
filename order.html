@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Orła Czerwonego — Serwer PRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tlo: #141210;
+    --tlo-karta: #1c1a17;
+    --tlo-karta-jasniej: #242119;
+    --linia: #322c22;
+    --czerwien: #b5152b;
+    --czerwien-jasna: #d81e3a;
+    --zloto: #c9a84c;
+    --zloto-jasne: #e3c878;
+    --tekst: #ede7d9;
+    --tekst-przygaszony: #9a9284;
+    --zielony: #4caf6d;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{ background: var(--tlo); color: var(--tekst); font-family: 'PT Sans', sans-serif; line-height: 1.55; min-height: 100vh; }
+  h1, h2, h3, .naglowek-tytul{ font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  .kontener{ max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+  /* NAGŁÓWEK */
+  .naglowek{ position: relative; text-align: center; padding: 56px 20px 40px; border-bottom: 3px solid var(--czerwien); background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%); overflow: hidden; }
+  .naglowek::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien)); }
+  .gwiazda{ font-size: 28px; color: var(--zloto); display: block; margin-bottom: 14px; }
+  .naglowek-tytul{ font-size: clamp(26px, 5vw, 38px); font-weight: 700; color: var(--tekst); text-transform: uppercase; }
+  .naglowek-podtytul{ margin-top: 10px; font-size: clamp(13px, 2.2vw, 16px); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* NAWIGACJA */
+  .zakladki{ display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding: 0 20px; }
+  .zakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 22px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); text-decoration: none; display: inline-block; transition: all 0.2s ease; }
+  .zakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
+  .zakladka.aktywna{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border-color: var(--czerwien-jasna); color: #fff; }
+
+  /* SEKCJE */
+  .sekcja{ margin-top: 40px; }
+  .sekcja-tytul{ font-size: 14px; font-weight: 600; color: var(--zloto); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--linia); }
+
+  .karta{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 24px; position: relative; }
+  .karta::before{ content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--czerwien); border-radius: 6px 0 0 6px; }
+  .artykul-p{ margin-top: 10px; font-size: 14px; color: var(--tekst); }
+  .artykul-p:first-of-type{ margin-top: 0; }
+  .artykul-p strong{ color: var(--zloto); font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+
+  /* STOPKA */
+  .stopka{ margin-top: 60px; text-align: center; font-size: 12px; color: var(--tekst-przygaszony); padding-top: 24px; border-top: 1px solid var(--linia); }
+  .przycisk-discord{ display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px 22px; background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border: 1px solid var(--czerwien-jasna); border-radius: 4px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: opacity 0.2s ease; }
+  .przycisk-discord:hover{ opacity: 0.85; }
+
+  /* ZASADY ORDERU */
+  .zasady-ordera .artykul-p{ margin-top: 10px; }
+
+  /* LISTA ODZNACZONYCH */
+  .licznik-odznaczonych{ font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; font-family: 'Oswald', sans-serif; }
+  .licznik-odznaczonych strong{ color: var(--zloto-jasne); font-size: 15px; }
+  .lista-odznaczen{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; overflow: hidden; }
+  .odznaczenie{ display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--linia); }
+  .odznaczenie:last-child{ border-bottom: none; }
+  .odznaczenie-medal{ font-size: 26px; color: var(--zloto); flex-shrink: 0; }
+  .odznaczenie-imie{ font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 600; color: var(--tekst); }
+  .odznaczenie-powod{ font-size: 13px; color: var(--tekst-przygaszony); margin-top: 2px; }
+  .odznaczenie-data{ font-size: 12px; color: var(--zloto-jasne); white-space: nowrap; text-align: right; }
+  .odznaczenie-brak{ padding: 24px 22px; text-align: center; color: var(--tekst-przygaszony); font-size: 14px; font-style: italic; }
+  @media (max-width: 480px){
+    .odznaczenie{ grid-template-columns: auto 1fr; }
+    .odznaczenie-data{ grid-column: 2; text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="naglowek">
+    <span class="gwiazda">☭</span>
+    <h1 class="naglowek-tytul">Order Orła Czerwonego</h1>
+    <p class="naglowek-podtytul">Najwyższe Odznaczenie Państwowe</p>
+  </header>
+
+  <nav class="zakladki">
+    <a class="zakladka" href="regulamin.html">Regulamin</a>
+    <a class="zakladka" href="index.html">Panel Główny</a>
+    <a class="zakladka" href="uczelnia.html">Uczelnia</a>
+    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
+    <a class="zakladka" href="sekretarze.html">Spis sekretarzy</a>
+    <a class="zakladka aktywna" href="order.html">Order Orła Czerwonego</a>
+    <a class="zakladka" href="ai-detektor.html">AI Detector</a>
+  </nav>
+
+  <div class="kontener">
+    <section class="sekcja">
+      <div class="sekcja-tytul">Zasady Nadawania Orderu</div>
+      <div class="karta zasady-ordera">
+        <p class="artykul-p"><strong>Art. 1.</strong> Order Orła Czerwonego stanowi najwyższe odznaczenie państwowe na serwerze.</p>
+        <p class="artykul-p"><strong>Art. 2.</strong> Order nadaje Założyciel Serwera za wybitne zasługi, po uzyskaniu akceptacji I oraz II Sekretarza.</p>
+        <p class="artykul-p"><strong>Art. 3.</strong> Pozbawienie odznaczenia może nastąpić wyłącznie za zgodą Założyciela Serwera, I Sekretarza oraz II Sekretarza.</p>
+      </div>
+    </section>
+
+    <section class="sekcja">
+      <div class="sekcja-tytul">Rejestr Odznaczonych — Order Orła Czerwonego</div>
+      <div class="licznik-odznaczonych">Liczba odznaczonych: <strong id="licznikOdznaczonych">0</strong></div>
+      <div class="lista-odznaczen" id="listaOdznaczen"></div>
+    </section>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a>
+      <br>
+      Rzeczpospolita PRL — Kapituła Orderu
+    </div>
+  </div>
+
+<script src="stanowiska.js"></script>
+<script>
+  // Dane pochodzą z pliku stanowiska.js (zmienna listaOdznaczonychObywateli).
+  // Każdy wpis: { imie: "...", powod: "...", data: "..." }
+  (function(){
+    const kontener = document.getElementById("listaOdznaczen");
+    const dane = (typeof listaOdznaczonychObywateli !== "undefined") ? listaOdznaczonychObywateli : [];
+
+    document.getElementById("licznikOdznaczonych").textContent = dane.length;
+
+    if (dane.length === 0) {
+      const brak = document.createElement("div");
+      brak.className = "odznaczenie-brak";
+      brak.textContent = "Brak informacji o nadanych odznaczeniach.";
+      kontener.appendChild(brak);
+      return;
+    }
+
+    dane.forEach(function(osoba){
+      const wiersz = document.createElement("div");
+      wiersz.className = "odznaczenie";
+
+      const medal = document.createElement("span");
+      medal.className = "odznaczenie-medal";
+      medal.textContent = "★";
+
+      const opis = document.createElement("div");
+      const imie = document.createElement("div");
+      imie.className = "odznaczenie-imie";
+      imie.textContent = osoba.imie;
+      const powod = document.createElement("div");
+      powod.className = "odznaczenie-powod";
+      powod.textContent = osoba.powod || "";
+      opis.appendChild(imie);
+      opis.appendChild(powod);
+
+      const data = document.createElement("span");
+      data.className = "odznaczenie-data";
+      data.textContent = osoba.data || "";
+
+      wiersz.appendChild(medal);
+      wiersz.appendChild(opis);
+      wiersz.appendChild(data);
+      kontener.appendChild(wiersz);
+    });
+  })();
+</script>
+</body>
+</html>

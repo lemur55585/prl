@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Detector — Serwer PRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tlo: #141210;
+    --tlo-karta: #1c1a17;
+    --tlo-karta-jasniej: #242119;
+    --linia: #322c22;
+    --czerwien: #b5152b;
+    --czerwien-jasna: #d81e3a;
+    --zloto: #c9a84c;
+    --zloto-jasne: #e3c878;
+    --tekst: #ede7d9;
+    --tekst-przygaszony: #9a9284;
+    --zielony: #4caf6d;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{ background: var(--tlo); color: var(--tekst); font-family: 'PT Sans', sans-serif; line-height: 1.55; min-height: 100vh; }
+  h1, h2, h3, .naglowek-tytul{ font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  .kontener{ max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+  /* NAGŁÓWEK */
+  .naglowek{ position: relative; text-align: center; padding: 56px 20px 40px; border-bottom: 3px solid var(--czerwien); background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%); overflow: hidden; }
+  .naglowek::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien)); }
+  .gwiazda{ font-size: 28px; color: var(--zloto); display: block; margin-bottom: 14px; }
+  .naglowek-tytul{ font-size: clamp(26px, 5vw, 38px); font-weight: 700; color: var(--tekst); text-transform: uppercase; }
+  .naglowek-podtytul{ margin-top: 10px; font-size: clamp(13px, 2.2vw, 16px); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* NAWIGACJA */
+  .zakladki{ display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding: 0 20px; }
+  .zakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 22px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); text-decoration: none; display: inline-block; transition: all 0.2s ease; }
+  .zakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
+  .zakladka.aktywna{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border-color: var(--czerwien-jasna); color: #fff; }
+
+  /* SEKCJE */
+  .sekcja{ margin-top: 40px; }
+  .sekcja-tytul{ font-size: 14px; font-weight: 600; color: var(--zloto); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--linia); }
+
+  .karta{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 24px; position: relative; }
+  .karta::before{ content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--czerwien); border-radius: 6px 0 0 6px; }
+  .artykul-p{ margin-top: 10px; font-size: 14px; color: var(--tekst); }
+  .artykul-p:first-of-type{ margin-top: 0; }
+  .artykul-p strong{ color: var(--zloto); font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+
+  /* STOPKA */
+  .stopka{ margin-top: 60px; text-align: center; font-size: 12px; color: var(--tekst-przygaszony); padding-top: 24px; border-top: 1px solid var(--linia); }
+  .przycisk-discord{ display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 10px 22px; background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border: 1px solid var(--czerwien-jasna); border-radius: 4px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: opacity 0.2s ease; }
+  .przycisk-discord:hover{ opacity: 0.85; }
+
+  .opis-detektora{ font-size: 14px; color: var(--tekst-przygaszony); margin-bottom: 16px; }
+
+  textarea#poleTekstu{ width: 100%; min-height: 220px; resize: vertical; padding: 14px 16px; background: var(--tlo-karta-jasniej); border: 1px solid var(--linia); border-radius: 6px; color: var(--tekst); font-family: 'PT Sans', sans-serif; font-size: 15px; line-height: 1.6; }
+  textarea#poleTekstu:focus{ outline: none; border-color: var(--zloto); }
+  .pasek-narzedzi{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .licznik-znakow{ margin-left: auto; font-size: 12px; color: var(--tekst-przygaszony); }
+
+  .przycisk{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 22px; border-radius: 4px; cursor: pointer; transition: opacity 0.2s ease, border-color 0.2s ease; }
+  .przycisk-glowny{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border: 1px solid var(--czerwien-jasna); color: #fff; }
+  .przycisk-glowny:hover{ opacity: 0.85; }
+  .przycisk-drugi{ background: var(--tlo-karta); border: 1px solid var(--linia); color: var(--tekst-przygaszony); }
+  .przycisk-drugi:hover{ color: var(--tekst); border-color: var(--zloto); }
+
+  /* WYNIK */
+  #wynik{ display: none; }
+  .wynik-gora{ display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .wynik-procent{ font-family: 'Oswald', sans-serif; font-size: 64px; font-weight: 700; line-height: 1; }
+  .wynik-opis{ flex: 1; min-width: 200px; }
+  .wynik-werdykt{ font-family: 'Oswald', sans-serif; font-size: 20px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .wynik-podpis{ font-size: 13px; color: var(--tekst-przygaszony); margin-top: 4px; }
+  .pasek-tlo{ width: 100%; height: 12px; margin-top: 18px; background: var(--tlo-karta-jasniej); border-radius: 999px; overflow: hidden; border: 1px solid var(--linia); }
+  .pasek-wypelnienie{ height: 100%; width: 0; border-radius: 999px; transition: width 0.6s ease; }
+  .poziom-niski{ color: var(--zielony); }
+  .poziom-sredni{ color: var(--zloto-jasne); }
+  .poziom-wysoki{ color: var(--czerwien-jasna); }
+  .tlo-niski{ background: var(--zielony); }
+  .tlo-sredni{ background: var(--zloto); }
+  .tlo-wysoki{ background: linear-gradient(90deg, var(--czerwien), var(--czerwien-jasna)); }
+  .ostrzezenie{ margin-top: 14px; padding: 10px 14px; border: 1px solid var(--zloto); background: rgba(201,168,76,0.08); border-radius: 4px; font-size: 13px; color: var(--zloto-jasne); }
+
+  /* ZNALEZISKA */
+  .znalezisko{ display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 12px 0; border-bottom: 1px dashed var(--linia); }
+  .znalezisko:last-child{ border-bottom: none; }
+  .znalezisko-nazwa{ font-family: 'Oswald', sans-serif; font-size: 16px; color: var(--zloto-jasne); font-weight: 600; }
+  .znalezisko-punkty{ font-family: 'Oswald', sans-serif; font-size: 15px; color: var(--czerwien-jasna); text-align: right; white-space: nowrap; }
+  .znalezisko-opis{ grid-column: 1 / -1; font-size: 13px; color: var(--tekst-przygaszony); }
+  .brak-znalezisk{ font-size: 14px; color: var(--tekst-przygaszony); font-style: italic; }
+
+  /* PODŚWIETLONY TEKST */
+  .tekst-podswietlony{ white-space: pre-wrap; word-wrap: break-word; font-size: 15px; line-height: 1.7; }
+  mark.zn{ border-radius: 3px; padding: 0 3px; color: #fff; }
+  mark.zn-dlugi{ background: var(--czerwien); }
+  mark.zn-polpauza{ background: #a06a1b; }
+  mark.zn-zwykly{ background: #8a7a2a; }
+  mark.zn-fraza{ background: #7a2a5e; }
+  mark.zn-inne{ background: #2f5d8a; }
+  .legenda{ display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; font-size: 12px; color: var(--tekst-przygaszony); }
+  .legenda span.kolor{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .zastrzezenie{ margin-top: 40px; padding: 16px 20px; border: 1px solid var(--linia); border-radius: 6px; font-size: 13px; color: var(--tekst-przygaszony); background: var(--tlo-karta); }
+  .zastrzezenie strong{ color: var(--zloto-jasne); }
+</style>
+</head>
+<body>
+
+  <header class="naglowek">
+    <span class="gwiazda">★</span>
+    <h1 class="naglowek-tytul">AI Detector</h1>
+    <p class="naglowek-podtytul">Wykrywanie Śladów Tekstu Generowanego przez AI</p>
+  </header>
+
+  <nav class="zakladki">
+    <a class="zakladka" href="regulamin.html">Regulamin</a>
+    <a class="zakladka" href="index.html">Panel Główny</a>
+    <a class="zakladka" href="uczelnia.html">Uczelnia</a>
+    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
+    <a class="zakladka" href="sekretarze.html">Spis sekretarzy</a>
+    <a class="zakladka" href="order.html">Order Orła Czerwonego</a>
+    <a class="zakladka aktywna" href="ai-detektor.html">AI Detector</a>
+  </nav>
+
+  <div class="kontener">
+    <section class="sekcja">
+      <div class="sekcja-tytul">Wklej tekst do sprawdzenia</div>
+      <p class="opis-detektora">Detektor szuka w tekście charakterystycznych śladów AI: długich myślników (nawet jeden to sygnał), nadmiaru zwykłych myślników użytych jako pauza, typowych zwrotów i kilku cech formatowania.</p>
+      <textarea id="poleTekstu" maxlength="30000" placeholder="Wklej tutaj tekst..."></textarea>
+      <div class="pasek-narzedzi">
+        <button class="przycisk przycisk-glowny" id="przyciskSprawdz" type="button">Sprawdź tekst</button>
+        <button class="przycisk przycisk-drugi" id="przyciskPrzyklad" type="button">Wstaw przykład</button>
+        <button class="przycisk przycisk-drugi" id="przyciskWyczysc" type="button">Wyczyść</button>
+        <span class="licznik-znakow" id="licznikZnakow">0 znaków · 0 słów</span>
+      </div>
+    </section>
+
+    <div id="wynik">
+      <section class="sekcja">
+        <div class="sekcja-tytul">Wynik analizy</div>
+        <div class="karta">
+          <div class="wynik-gora">
+            <div class="wynik-procent" id="wynikProcent">0%</div>
+            <div class="wynik-opis">
+              <div class="wynik-werdykt" id="wynikWerdykt"></div>
+              <div class="wynik-podpis" id="wynikPodpis"></div>
+            </div>
+          </div>
+          <div class="pasek-tlo"><div class="pasek-wypelnienie" id="wynikPasek"></div></div>
+          <div class="ostrzezenie" id="wynikOstrzezenie" style="display:none;"></div>
+        </div>
+      </section>
+
+      <section class="sekcja">
+        <div class="sekcja-tytul">Co jest podejrzane</div>
+        <div class="karta" id="listaZnalezisk"></div>
+      </section>
+
+      <section class="sekcja">
+        <div class="sekcja-tytul">Podświetlony tekst</div>
+        <div class="karta">
+          <div class="legenda">
+            <span><span class="kolor" style="background:var(--czerwien)"></span>długi myślnik</span>
+            <span><span class="kolor" style="background:#a06a1b"></span>półpauza</span>
+            <span><span class="kolor" style="background:#8a7a2a"></span>zwykły myślnik jako pauza</span>
+            <span><span class="kolor" style="background:#7a2a5e"></span>typowy zwrot AI</span>
+            <span><span class="kolor" style="background:#2f5d8a"></span>inne ślady</span>
+          </div>
+          <div class="tekst-podswietlony" id="tekstPodswietlony"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="zastrzezenie">
+      <strong>Ważne:</strong> to prosta heurystyka, a nie dowód. Wynik w procentach to suma punktów za podejrzane cechy stylu i nigdy nie przekracza 98%. Człowiek też używa myślników, a edytory takie jak Word potrafią automatycznie zamieniać „ - ” na „ – ”. Brak śladów nie oznacza, że tekst napisał człowiek. Traktuj wynik jako wskazówkę do dalszego sprawdzenia, nie wyrok.
+    </div>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a>
+      <br>
+      Rzeczpospolita PRL — Wydział Kontroli Treści
+    </div>
+  </div>
+
+<script>
+/* ============================================================
+   USTAWIENIA DETEKTORA: tu zmieniasz wagi (punkty) i listę zwrotów
+   Wynik w % = suma punktów wszystkich znalezisk (maksymalnie maxProcent).
+   ============================================================ */
+const USTAWIENIA = {
+  dlugiMyslnik:   { pierwszy: 30, kolejny: 10, max: 60 },   // — (nawet jeden jest podejrzany)
+  polpauza:       { zaSztuke: 6, max: 18 },                 // spacja – spacja
+  zwykleMyslniki: { prog: 3, baza: 8, krok: 4, max: 25 },   // spacja - spacja (od "prog" sztuk)
+  frazy:          { zaSztuke: 6, max: 30 },                 // typowe zwroty AI
+  markdown:       { zaRodzaj: 8, max: 16 },                 // **pogrubienia**, ### nagłówki
+  emoji:          { prog: 3, punkty: 4 },                   // dużo emoji / symboli
+  wielokropek:    { zaSztuke: 4, max: 8 },                  // znak …
+  cudzyslowy:     { punkty: 4 },                            // „ ” “ ”
+  rowneZdania:    { silne: 10, lekkie: 5 },                 // bardzo równa długość zdań
+  maxProcent: 98,
+  progi: { niski: 25, wysoki: 55 }                          // granice werdyktu
+};
+
+const FRAZY_AI = [
+  "warto zauważyć", "warto podkreślić", "warto wspomnieć", "warto pamiętać",
+  "należy pamiętać", "należy podkreślić", "należy zauważyć",
+  "podsumowując", "w podsumowaniu", "reasumując",
+  "w dzisiejszych czasach", "w dzisiejszym świecie", "w erze cyfrowej",
+  "kluczową rolę", "kluczowe znaczenie", "istotną rolę", "fundamentalne znaczenie",
+  "ważne jest, aby", "istotne jest, aby", "niezwykle istotne", "niezwykle ważne",
+  "bez wątpienia", "nie ulega wątpliwości", "w tym kontekście", "co więcej",
+  "dynamicznie zmieniając", "kompleksowe podejście", "szeroki wachlarz",
+  "jako model językowy", "jako sztuczna inteligencja", "jako asystent",
+  "mam nadzieję, że to pomoże", "daj znać, jeśli", "chętnie pomogę",
+  "świetne pytanie", "z przyjemnością"
+];
+
+/* ============================================================
+   ANALIZA (czysta logika, bez DOM)
+   ============================================================ */
+function escapeRegex(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+function zbierz(tekst, regex, klasa, etykieta, grupa){
+  const wyniki = [];
+  for (const m of tekst.matchAll(regex)) {
+    let start = m.index, tresc = m[0];
+    if (grupa) { start = m.index + m[0].indexOf(m[grupa]); tresc = m[grupa]; }
+    wyniki.push({ start: start, end: start + tresc.length, klasa: klasa, etykieta: etykieta, tresc: tresc });
+  }
+  return wyniki;
+}
+
+function analizuj(tekst){
+  const U = USTAWIENIA;
+  const znaleziska = [];
+  let zakresy = [];
+  const slowa = (tekst.match(/\S+/g) || []).length;
+
+  // 1. Długie myślniki — nawet jeden
+  const dlugie = zbierz(tekst, /[—―]/g, "dlugi", "Długi myślnik (—)");
+  if (dlugie.length) {
+    const pkt = Math.min(U.dlugiMyslnik.max, U.dlugiMyslnik.pierwszy + (dlugie.length - 1) * U.dlugiMyslnik.kolejny);
+    znaleziska.push({ nazwa: "Długie myślniki (—)", ile: dlugie.length, punkty: pkt,
+      opis: "Długi myślnik prawie nie występuje w zwykłym pisaniu na polskiej klawiaturze, a modele AI wstawiają go bardzo często. Podejrzany jest już jeden." });
+    zakresy = zakresy.concat(dlugie);
+  }
+
+  // 2. Półpauza otoczona spacjami
+  const pol = zbierz(tekst, /\s(–)\s/g, "polpauza", "Półpauza (–)", 1);
+  if (pol.length) {
+    const pkt = Math.min(U.polpauza.max, pol.length * U.polpauza.zaSztuke);
+    znaleziska.push({ nazwa: "Półpauza użyta jako pauza (–)", ile: pol.length, punkty: pkt,
+      opis: "Może pochodzić z autokorekty edytora (Word, Google Docs), ale AI też jej często używa zamiast zwykłego myślnika." });
+    zakresy = zakresy.concat(pol);
+  }
+
+  // 3. Zwykły myślnik (lub --) między spacjami, używany jako pauza
+  const zwykle = zbierz(tekst, /\s(-{1,2})\s/g, "zwykly", "Zwykły myślnik jako pauza", 1);
+  if (zwykle.length >= U.zwykleMyslniki.prog) {
+    const pkt = Math.min(U.zwykleMyslniki.max, U.zwykleMyslniki.baza + (zwykle.length - U.zwykleMyslniki.prog) * U.zwykleMyslniki.krok);
+    znaleziska.push({ nazwa: "Dużo zwykłych myślników jako pauz ( - )", ile: zwykle.length, punkty: pkt,
+      opis: "Znalezione: " + zwykle.length + " (próg podejrzenia: " + U.zwykleMyslniki.prog + "). Częste przerywanie zdań myślnikiem to typowy styl generowanych tekstów." });
+    zakresy = zakresy.concat(zwykle);
+  }
+
+  // 4. Typowe zwroty AI
+  const reFrazy = new RegExp(FRAZY_AI.map(escapeRegex).join("|"), "giu");
+  const frazy = zbierz(tekst, reFrazy, "fraza", "Typowy zwrot AI");
+  if (frazy.length) {
+    const unikalne = [...new Set(frazy.map(function(f){ return f.tresc.toLowerCase(); }))];
+    const pkt = Math.min(U.frazy.max, frazy.length * U.frazy.zaSztuke);
+    znaleziska.push({ nazwa: "Charakterystyczne zwroty AI", ile: frazy.length, punkty: pkt,
+      opis: "Wykryte: " + unikalne.map(function(f){ return "„" + f + "”"; }).join(", ") + "." });
+    zakresy = zakresy.concat(frazy);
+  }
+
+  // 5. Formatowanie markdown (pogrubienia, nagłówki)
+  const pogrubienia = zbierz(tekst, /\*\*[^*\n]+\*\*/g, "inne", "Pogrubienie markdown");
+  const naglowki = zbierz(tekst, /^#{1,6}\s.+$/gm, "inne", "Nagłówek markdown");
+  const rodzaje = (pogrubienia.length ? 1 : 0) + (naglowki.length ? 1 : 0);
+  if (rodzaje) {
+    znaleziska.push({ nazwa: "Formatowanie markdown", ile: pogrubienia.length + naglowki.length,
+      punkty: Math.min(U.markdown.max, rodzaje * U.markdown.zaRodzaj),
+      opis: "Pogrubienia **tak** albo nagłówki ### bywają kopiowane prosto z odpowiedzi chatbota." });
+    zakresy = zakresy.concat(pogrubienia, naglowki);
+  }
+
+  // 6. Dużo emoji / symboli
+  const emoji = zbierz(tekst, /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B50}\u{2192}]/gu, "inne", "Emoji / symbol");
+  if (emoji.length >= U.emoji.prog) {
+    znaleziska.push({ nazwa: "Dużo emoji i symboli", ile: emoji.length, punkty: U.emoji.punkty,
+      opis: "Nagromadzenie emoji lub symboli typu ✅ → ✨ jest częste w tekstach z chatbotów." });
+    zakresy = zakresy.concat(emoji);
+  }
+
+  // 7. Znak wielokropka …
+  const wiel = zbierz(tekst, /…/g, "inne", "Wielokropek (…)");
+  if (wiel.length) {
+    znaleziska.push({ nazwa: "Znak wielokropka (…)", ile: wiel.length,
+      punkty: Math.min(U.wielokropek.max, wiel.length * U.wielokropek.zaSztuke),
+      opis: "Ludzie zwykle piszą trzy kropki, a nie pojedynczy znak „…”." });
+    zakresy = zakresy.concat(wiel);
+  }
+
+  // 8. Typograficzne cudzysłowy
+  const cudz = zbierz(tekst, /[„”“”]/g, "inne", "Cudzysłów typograficzny");
+  if (cudz.length) {
+    znaleziska.push({ nazwa: "Cudzysłowy typograficzne („ ”)", ile: cudz.length, punkty: U.cudzyslowy.punkty,
+      opis: "Słaby sygnał: mogą pochodzić z edytora tekstu, ale w czacie piszemy zwykle zwykłymi cudzysłowami." });
+    zakresy = zakresy.concat(cudz);
+  }
+
+  // 9. Zbyt równa długość zdań
+  const zdania = (tekst.match(/[^.!?…\n]+[.!?…]*/g) || []).map(function(z){ return (z.match(/\S+/g) || []).length; }).filter(function(n){ return n >= 3; });
+  if (zdania.length >= 6) {
+    const srednia = zdania.reduce(function(a, b){ return a + b; }, 0) / zdania.length;
+    const odch = Math.sqrt(zdania.reduce(function(a, b){ return a + Math.pow(b - srednia, 2); }, 0) / zdania.length);
+    const wsp = odch / srednia;
+    if (srednia >= 8 && wsp < 0.40) {
+      znaleziska.push({ nazwa: "Bardzo równa długość zdań", ile: zdania.length,
+        punkty: wsp < 0.30 ? U.rowneZdania.silne : U.rowneZdania.lekkie,
+        opis: "Zdania mają niemal identyczną długość (zmienność " + wsp.toFixed(2) + "). Ludzie piszą bardziej nierówno." });
+    }
+  }
+
+  const suma = znaleziska.reduce(function(a, z){ return a + z.punkty; }, 0);
+  const procent = Math.min(U.maxProcent, Math.round(suma));
+  znaleziska.sort(function(a, b){ return b.punkty - a.punkty; });
+
+  return { procent: procent, znaleziska: znaleziska, zakresy: zakresy, slowa: slowa };
+}
+
+/* ============================================================
+   WIDOK (DOM)
+   ============================================================ */
+function esc(s){
+  return s.replace(/[&<>"']/g, function(c){
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+function podswietl(tekst, zakresy){
+  const posortowane = zakresy.slice().sort(function(a, b){ return a.start - b.start || (b.end - b.start) - (a.end - a.start); });
+  let html = "", poz = 0;
+  posortowane.forEach(function(z){
+    if (z.start < poz) return;                       // pomiń zachodzące na siebie
+    html += esc(tekst.slice(poz, z.start));
+    html += '<mark class="zn zn-' + z.klasa + '" title="' + esc(z.etykieta) + '">' + esc(tekst.slice(z.start, z.end)) + '</mark>';
+    poz = z.end;
+  });
+  html += esc(tekst.slice(poz));
+  return html;
+}
+
+function pokazWynik(tekst){
+  const U = USTAWIENIA;
+  const w = analizuj(tekst);
+  const poziom = w.procent >= U.progi.wysoki ? "wysoki" : (w.procent >= U.progi.niski ? "sredni" : "niski");
+  const werdykty = {
+    niski: "Raczej napisał człowiek",
+    sredni: "Niejednoznaczne, są podejrzane ślady",
+    wysoki: "Wysokie prawdopodobieństwo AI"
+  };
+
+  const elProcent = document.getElementById("wynikProcent");
+  elProcent.textContent = w.procent + "%";
+  elProcent.className = "wynik-procent poziom-" + poziom;
+
+  const elWerdykt = document.getElementById("wynikWerdykt");
+  elWerdykt.textContent = werdykty[poziom];
+  elWerdykt.className = "wynik-werdykt poziom-" + poziom;
+
+  document.getElementById("wynikPodpis").textContent = w.znaleziska.length
+    ? "Znaleziono " + w.znaleziska.length + " rodzaj(e) podejrzanych cech."
+    : "Nie wykryto charakterystycznych śladów AI (to nie dowód, że autorem jest człowiek).";
+
+  const pasek = document.getElementById("wynikPasek");
+  pasek.className = "pasek-wypelnienie tlo-" + poziom;
+  pasek.style.width = "0";
+  requestAnimationFrame(function(){ pasek.style.width = w.procent + "%"; });
+
+  const ost = document.getElementById("wynikOstrzezenie");
+  if (w.slowa < 15) {
+    ost.style.display = "block";
+    ost.textContent = "Bardzo krótki tekst (" + w.slowa + " słów): wynik jest mało wiarygodny.";
+  } else {
+    ost.style.display = "none";
+  }
+
+  const lista = document.getElementById("listaZnalezisk");
+  lista.innerHTML = "";
+  if (!w.znaleziska.length) {
+    lista.innerHTML = '<div class="brak-znalezisk">Nic podejrzanego nie znaleziono.</div>';
+  } else {
+    w.znaleziska.forEach(function(z){
+      const div = document.createElement("div");
+      div.className = "znalezisko";
+      div.innerHTML =
+        '<div class="znalezisko-nazwa">' + esc(z.nazwa) + ' <span style="color:var(--tekst-przygaszony);font-weight:400;">×' + z.ile + '</span></div>' +
+        '<div class="znalezisko-punkty">+' + z.punkty + ' pkt</div>' +
+        '<div class="znalezisko-opis">' + esc(z.opis) + '</div>';
+      lista.appendChild(div);
+    });
+  }
+
+  document.getElementById("tekstPodswietlony").innerHTML = podswietl(tekst, w.zakresy);
+  document.getElementById("wynik").style.display = "block";
+  document.getElementById("wynik").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+(function(){
+  // ===== UI =====
+  const pole = document.getElementById("poleTekstu");
+  const licznik = document.getElementById("licznikZnakow");
+
+  function odswiezLicznik(){
+    const slowa = (pole.value.match(/\S+/g) || []).length;
+    licznik.textContent = pole.value.length + " znaków · " + slowa + " słów";
+  }
+  pole.addEventListener("input", odswiezLicznik);
+
+  document.getElementById("przyciskSprawdz").addEventListener("click", function(){
+    if (!pole.value.trim()) { pole.focus(); return; }
+    pokazWynik(pole.value);
+  });
+
+  document.getElementById("przyciskWyczysc").addEventListener("click", function(){
+    pole.value = "";
+    odswiezLicznik();
+    document.getElementById("wynik").style.display = "none";
+    pole.focus();
+  });
+
+  document.getElementById("przyciskPrzyklad").addEventListener("click", function(){
+    pole.value = "W dzisiejszych czasach technologia odgrywa kluczową rolę — nie tylko w pracy, ale także w życiu codziennym. " +
+      "Warto zauważyć, że rozwój sztucznej inteligencji - choć dynamiczny - niesie ze sobą wiele wyzwań. " +
+      "Co więcej, należy pamiętać, że odpowiedzialne podejście ma fundamentalne znaczenie. " +
+      "Podsumowując, przyszłość zależy od nas wszystkich.";
+    odswiezLicznik();
+  });
+})();
+</script>
+</body>
+</html>

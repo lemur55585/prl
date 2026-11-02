@@ -89,6 +89,8 @@
     <a class="zakladka" href="uczelnia.html">Uczelnia</a>
     <a class="zakladka" href="konstytucja.html">Konstytucja</a>
     <a class="zakladka" href="sekretarze.html">Spis sekretarzy</a>
+    <a class="zakladka" href="order.html">Order Orła Czerwonego</a>
+    <a class="zakladka" href="ai-detektor.html">AI Detector</a>
   </nav>
 
   <div class="kontener">
@@ -124,11 +126,6 @@
         <div class="karta-prawna-wiersz"><span class="karta-prawna-etykieta">Status prawny serwera</span><span class="znacznik-ok" id="statusPrawny"><span>●</span> W mocy</span></div>
         <div class="karta-prawna-wiersz"><span class="karta-prawna-etykieta">Data nowelizacji</span><span class="karta-prawna-wartosc" id="dataNowelizacji">—</span></div>
       </div>
-    </section>
-
-    <section class="sekcja">
-      <div class="sekcja-tytul">Rejestr Odznaczeń Państwowych — Order Orła Czerwonego</div>
-      <div class="lista-odznaczen" id="listaOdznaczen"></div>
     </section>
 
     <div class="stopka">
@@ -187,21 +184,8 @@
     statusEl.style.color = statusPrawnyAktywny ? "var(--zielony)" : "var(--czerwien-jasna)";
   }
 
-  function zbudujListe(idKontenera, dane, ikona){
-    const kontener = document.getElementById(idKontenera);
-    if (!kontener) return;
-    kontener.innerHTML = "";
-    dane.forEach(osoba => {
-      const wiersz = document.createElement("div");
-      wiersz.className = "odznaczenie";
-      wiersz.innerHTML = `<span class="odznaczenie-medal">${ikona}</span><div><div class="odznaczenie-imie">${osoba.imie}</div><div class="odznaczenie-powod">${osoba.powod}</div></div><span class="odznaczenie-data">${osoba.data}</span>`;
-      kontener.appendChild(wiersz);
-    });
-  }
-
   window.onload = function() {
     odswiezPanel();
-    zbudujListe("listaOdznaczen", listaOdznaczonychObywateli, "★");
     document.getElementById("banerGlosowania").style.display = czyTrwaGlosowanie ? "flex" : "none";
     setInterval(odswiezPanel, 60000);
   };

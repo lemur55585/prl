@@ -188,6 +188,41 @@
     color: var(--zloto);
   }
 
+  /* INFORMACJE O NOWELIZACJI */
+  .nowelizacja-karta{
+    border-color: var(--zloto);
+  }
+
+  .nowelizacja-wiersz{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--linia);
+    font-size: 14px;
+  }
+
+  .nowelizacja-etykieta{
+    color: var(--tekst-przygaszony);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  .nowelizacja-wartosc{
+    color: var(--zloto-jasne);
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+  }
+
+  .nowelizacja-opis{
+    margin-top: 14px;
+  }
+
   /* STOPKA */
   .stopka{
     margin-top: 60px;
@@ -236,6 +271,8 @@
     <a class="zakladka" href="uczelnia.html">Uczelnia</a>
     <a class="zakladka aktywna" href="konstytucja.html">Konstytucja</a>
     <a class="zakladka" href="sekretarze.html">Spis sekretarzy</a>
+    <a class="zakladka" href="order.html">Order Orła Czerwonego</a>
+    <a class="zakladka" href="ai-detektor.html">AI Detector</a>
   </nav>
 
   <div class="kontener">
@@ -384,6 +421,30 @@
         <h2 class="rozdzialtytul">Rozdział XII. Przepisy Końcowe</h2>
         <p class="artykul-p"><strong>Art. 1.</strong> Niniejsza Konstytucja obowiązuje na serwerach z serii PRL od dnia 1 września 2026 r.</p>
         <p class="artykul-p"><strong>Art. 2.</strong> Wyłączne prawo do wprowadzania autoryzowanych zmian i edycji tekstu niniejszego dokumentu posiadają Maloy oraz Bluetes.</p>
+      </div>
+
+      <!-- INFORMACJE O NOWELIZACJI (zawsze na samym dole) -->
+      <div class="rozdzial-karta nowelizacja-karta">
+        <h2 class="rozdzialtytul">Informacje o Nowelizacji Konstytucji</h2>
+        <div class="nowelizacja-wiersz">
+          <span class="nowelizacja-etykieta">Data nowelizacji</span>
+          <span class="nowelizacja-wartosc">2 listopada 2026 r.</span>
+        </div>
+        <div class="nowelizacja-wiersz">
+          <span class="nowelizacja-etykieta">Uchwalenie pierwotne</span>
+          <span class="nowelizacja-wartosc">30 sierpnia 2026 r.</span>
+        </div>
+        <div class="nowelizacja-wiersz">
+          <span class="nowelizacja-etykieta">Wejście w życie</span>
+          <span class="nowelizacja-wartosc">1 września 2026 r.</span>
+        </div>
+        <p class="artykul-p nowelizacja-opis">Niniejszy tekst jednolity uwzględnia nowelizację Konstytucji PRL z dnia 2 listopada 2026 r.</p>
+        <!--
+          ZAKRES ZMIAN (opcjonalnie) - odkomentuj i uzupelnij:
+          <ul class="podpunkt-lista">
+            <li>Rozdział ..., Art. ... - opis zmiany</li>
+          </ul>
+        -->
       </div>
 
     </section>
