@@ -82,42 +82,6 @@
     text-transform: uppercase;
   }
 
-  /* NAWIGACJA */
-  .zakladki{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 24px;
-    padding: 0 20px;
-  }
-
-  .zakladka{
-    font-family: 'Oswald', sans-serif;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 10px 22px;
-    background: var(--tlo-karta);
-    border: 1px solid var(--linia);
-    border-radius: 4px;
-    color: var(--tekst-przygaszony);
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s ease;
-  }
-
-  .zakladka:hover{
-    color: var(--tekst);
-    border-color: var(--zloto);
-  }
-
-  .zakladka.aktywna{
-    background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
-    border-color: var(--czerwien-jasna);
-    color: #fff;
-  }
-
   /* SEKCJE / OKRESY KADENCYJNE */
   .sekcja{ margin-top: 40px; }
 
@@ -203,6 +167,10 @@
     color: var(--tekst);
   }
 
+  .okres-tytul-kolejny{
+    margin-top: 26px;
+  }
+
   /* STOPKA */
   .stopka{
     margin-top: 60px;
@@ -244,114 +212,50 @@
     <p class="naglowek-podtytul">Chronologiczna Historia Przywództwa Serwera PRL</p>
   </header>
 
-  <nav class="zakladki">
-    <a class="zakladka" href="regulamin.html">Regulamin</a>
-    <a class="zakladka" href="index.html">Panel Główny</a>
-    <a class="zakladka" href="uczelnia.html">Uczelnia</a>
-    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
-    <a class="zakladka aktywna" href="sekretarze.html">Spis sekretarzy</a>
-    <a class="zakladka" href="order.html">Order Orła Czerwonego</a>
-    <a class="zakladka" href="ai-detektor.html">AI Detector</a>
-  </nav>
+  <nav id="menu-zakladek"></nav>
+  <script src="menu.js"></script>
 
   <div class="kontener">
     <section class="sekcja">
-
-      <!-- OKRES 1 -->
       <div class="okres-karta">
-        <div class="okres-tytul">
-          <span>Początki i Rządy Måløy</span>
-          <span class="okres-daty">Do 31.07.2026</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">I Sekretarz</span>
-          <span class="sekretarz-imie">Måløy</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">II Sekretarz</span>
-          <span class="sekretarz-imie">Pas</span>
-        </div>
-        <div class="okres-opis">
-          29 czerwca 2026 roku Måløy, nie chcąc sprawować władzy samodzielnie, ustanowił stanowisko II Sekretarza i powołał na nie Pasa.
-        </div>
+        <div class="okres-tytul"><span>Do 31.07.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Måløy</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Pas</span></div>
+        <div class="okres-opis">29 czerwca 2026 roku Måløy, nie chcąc sprawować władzy samodzielnie, ustanowił stanowisko II Sekretarza i powołał na nie Pasa.</div>
       </div>
-
-      <!-- OKRES 2 -->
       <div class="okres-karta">
-        <div class="okres-tytul">
-          <span>Pierwsze Wybory i Kadencja Devon</span>
-          <span class="okres-daty">01.08.2026 – 31.08.2026</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">I Sekretarz</span>
-          <span class="sekretarz-imie">Devon</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">II Sekretarz</span>
-          <span class="sekretarz-imie">Måløy</span>
-        </div>
-        <div class="okres-opis">
-          1 sierpnia 2026 roku Devon objęła władzę po zwycięstwie w wyborach. Była pierwszą osobą, która wygrała wybory, przerywając tym samym długotrwałe rządy Måløy.
-        </div>
+        <div class="okres-tytul"><span>01.08.2026–31.08.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Devon</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Måløy</span></div>
+        <div class="okres-opis">1 sierpnia 2026 roku Devon objęła władzę po zwycięstwie w wyborach. Była pierwszą osobą, która wygrała wybory, przerywając tym samym długotrwałe rządy Måløy.</div>
       </div>
-
-      <!-- OKRES 3 -->
       <div class="okres-karta">
-        <div class="okres-tytul">
-          <span>Krótkie Rządy Papaja</span>
-          <span class="okres-daty">01.09.2026 – 03.09.2026</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">I Sekretarz</span>
-          <span class="sekretarz-imie">Papaj</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">II Sekretarz</span>
-          <span class="sekretarz-imie">Bluetes</span>
-        </div>
-        <div class="okres-opis">
-          30 sierpnia 2026 roku ustanowiono nową konstytucję, która weszła w życie 1 września. Tego samego dnia władzę objął Papaj. Jego rządy nie trwały jednak długo. W wyniku buntu osób wcześniej usuniętych przez niego z partii został obalony.
-        </div>
+        <div class="okres-tytul"><span>01.09.2026–03.09.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Papaj</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Bluetes</span></div>
+        <div class="okres-opis">30 sierpnia 2026 roku ustanowiono nową konstytucję, która weszła w życie 1 września. Tego samego dnia władzę objął Papaj. Jego rządy nie trwały jednak długo. W wyniku buntu osób wcześniej usuniętych przez niego z partii został obalony.</div>
       </div>
-
-      <!-- OKRES 4 -->
       <div class="okres-karta">
-        <div class="okres-tytul">
-          <span>Krótki Interim Bluetesa</span>
-          <span class="okres-daty">04.09.2026 – 05.09.2026</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">I Sekretarz</span>
-          <span class="sekretarz-imie">Bluetes</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">II Sekretarz</span>
-          <span class="sekretarz-imie">Pax</span>
-        </div>
-        <div class="okres-opis">
-          Po obaleniu Papaja władzę przejął dotychczasowy II Sekretarz, Bluetes. Jego rządy trwały zaledwie dwa dni. W tym czasie doszło do poważnych naruszeń porządku serwera, a jego przywództwo zakończyło się 5 września.
-        </div>
+        <div class="okres-tytul"><span>04.09.2026–05.09.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Bluetes</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Pax</span></div>
+        <div class="okres-opis">Po obaleniu Papaja władzę przejął dotychczasowy II Sekretarz, Bluetes. Jego rządy trwały zaledwie dwa dni. W tym czasie doszło do poważnych naruszeń porządku serwera, a jego przywództwo zakończyło się 5 września.</div>
       </div>
-
-      <!-- OKRES 5 -->
       <div class="okres-karta">
-        <div class="okres-tytul">
-          <span>Obecne Rządy Paxa</span>
-          <span class="okres-daty">06.09.2026 – 31.10.2026</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">I Sekretarz</span>
-          <span class="sekretarz-imie">Pax</span>
-        </div>
-        <div class="sekretarz-wiersz">
-          <span class="sekretarz-rola">II Sekretarz</span>
-          <span class="sekretarz-imie">Devon</span>
-        </div>
-        <div class="okres-opis">
-          6 września 2026 roku władzę objął Pax, a funkcję II Sekretarza powierzył on Devon. Pax sprawuje władzę do dziś, jednak przyszłość jego przywództwa pozostaje niepewna. O tym, czy utrzyma stanowisko, rozstrzygną kolejne wybory.
-        </div>
+        <div class="okres-tytul"><span>06.09.2026–31.10.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Pax</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Devon</span></div>
+        <div class="okres-opis">6 września 2026 roku władzę objął Pax, a funkcję II Sekretarza powierzył Devon. Pax sprawował władzę przez kolejne dwa miesiące, utrzymując stabilne przywództwo. Jego kadencja zakończyła się 31 października 2026 roku, po czym kontynuował sprawowanie funkcji I Sekretarza w kolejnym okresie.</div>
       </div>
-
+      <div class="okres-karta">
+        <div class="okres-tytul"><span>01.11.2026–30.11.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Pax</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Eko</span></div>
+        <div class="okres-tytul okres-tytul-kolejny"><span>01.12.2026–31.12.2026</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">I Sekretarz</span><span class="sekretarz-imie">Pax</span></div>
+        <div class="sekretarz-wiersz"><span class="sekretarz-rola">II Sekretarz</span><span class="sekretarz-imie">Lemur</span></div>
+        <div class="okres-opis">Pax zwyciężył w kolejnych wyborach, zapewniając sobie dalsze dwumiesięczne sprawowanie władzy. Na listopad powołał Eko na II Sekretarza, natomiast na grudzień wyznaczył na to stanowisko Lemura.</div>
+      </div>
     </section>
 
     <div class="stopka">

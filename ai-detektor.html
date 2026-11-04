@@ -32,12 +32,6 @@
   .naglowek-tytul{ font-size: clamp(26px, 5vw, 38px); font-weight: 700; color: var(--tekst); text-transform: uppercase; }
   .naglowek-podtytul{ margin-top: 10px; font-size: clamp(13px, 2.2vw, 16px); color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
 
-  /* NAWIGACJA */
-  .zakladki{ display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 24px; padding: 0 20px; }
-  .zakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 22px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); text-decoration: none; display: inline-block; transition: all 0.2s ease; }
-  .zakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
-  .zakladka.aktywna{ background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna)); border-color: var(--czerwien-jasna); color: #fff; }
-
   /* SEKCJE */
   .sekcja{ margin-top: 40px; }
   .sekcja-tytul{ font-size: 14px; font-weight: 600; color: var(--zloto); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--linia); }
@@ -113,15 +107,8 @@
     <p class="naglowek-podtytul">Wykrywanie Śladów Tekstu Generowanego przez AI</p>
   </header>
 
-  <nav class="zakladki">
-    <a class="zakladka" href="regulamin.html">Regulamin</a>
-    <a class="zakladka" href="index.html">Panel Główny</a>
-    <a class="zakladka" href="uczelnia.html">Uczelnia</a>
-    <a class="zakladka" href="konstytucja.html">Konstytucja</a>
-    <a class="zakladka" href="sekretarze.html">Spis sekretarzy</a>
-    <a class="zakladka" href="order.html">Order Orła Czerwonego</a>
-    <a class="zakladka aktywna" href="ai-detektor.html">AI Detector</a>
-  </nav>
+  <nav id="menu-zakladek"></nav>
+  <script src="menu.js"></script>
 
   <div class="kontener">
     <section class="sekcja">
