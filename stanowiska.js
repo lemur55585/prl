@@ -40,7 +40,8 @@ const listaZarzadcowUczelni = [
 // Każdy wpis: { imie, przedmioty: [lista], data: "etykieta", ikona: "emoji (opcjonalnie)" }
 // Przedmioty wpisujesz tylko w tablicy "przedmioty" - zakładka "Przedmioty" tworzy się sama.
 const listaWykladowcow = [
-  { imie: "Lemur",    przedmioty: ["Fizyka", "Informatyka"],                                  data: "Wykładowca", ikona: "📚" },
-  { imie: "Bluetes",  przedmioty: ["Historia"],                                               data: "Wykładowca", ikona: "📜" },
+  { imie: "Lemur",    przedmioty: ["Informatyka"],                                  data: "Wykładowca", ikona: "💻" },
+  { imie: "Bluetes",  przedmioty: ["Historia"],                                     data: "Wykładowca", ikona: "📜" },
+  { imie: "Rafaella", przedmioty: ["Historia Rafalska"],                            data: "Wykładowca", ikona: "📖" },
   { imie: "Hirohito", przedmioty: ["Chemia", "Matematyka", "Fizyka Jądrowa", "Fizyka Kwantowa"], data: "Wykładowca", ikona: "⚛️" }
 ];
