@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spis Sekretarzy — Serwer PRL</title>
+<meta name="theme-color" content="#b5152b">
+<meta property="og:title" content="Spis Sekretarzy — Serwer PRL">
+<meta property="og:description" content="Chronologiczna historia przywództwa Rzeczpospolitej PRL.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23c9a84c'>★</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .okres-karta{ margin-bottom: 20px; }
+  .okres-tytul{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--zloto-jasne);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linia);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .okres-tytul-kolejny{ margin-top: 26px; }
+  .sekretarz-wiersz{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--linia);
+    font-size: 14px;
+  }
+  .sekretarz-wiersz:last-of-type{ border-bottom: none; margin-bottom: 12px; }
+  .sekretarz-rola{
+    color: var(--tekst-przygaszony);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    font-family: 'Oswald', sans-serif;
+  }
+  .sekretarz-imie{
+    color: var(--zloto-jasne);
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+  }
+  .okres-opis{
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--linia);
+    font-size: 14px;
+    color: var(--tekst);
+  }
+</style>
+</head>
+<body>
+
+  <header class="naglowek">
+    <span class="gwiazda">★</span>
+    <h1 class="naglowek-tytul">Spis Sekretarzy</h1>
+    <p class="naglowek-podtytul">Chronologiczna Historia Przywództwa Serwera PRL</p>
+  </header>
+
+  <div class="kontener">
+    <section class="sekcja" id="listaKadencji"></section>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a><br>
+      Rzeczpospolita PRL — Wydział Historyczno-Polityczny
+    </div>
+  </div>
+
+<script src="menu.js"></script>
+<script src="stanowiska.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  function el(tag, klasa, tekst){
+    const e = document.createElement(tag);
+    if (klasa) e.className = klasa;
+    if (tekst !== undefined && tekst !== null) e.textContent = tekst;
+    return e;
+  }
+
+  const kontener = document.getElementById("listaKadencji");
+  const dane = (typeof historiaSekretarzy !== "undefined") ? historiaSekretarzy : [];
+
+  dane.forEach(function(blok){
+    const karta = el("div", "karta okres-karta");
+
+    (blok.okresy || []).forEach(function(okr, idx){
+      const tytul = el("div", idx > 0 ? "okres-tytul okres-tytul-kolejny" : "okres-tytul");
+      tytul.appendChild(el("span", null, okr.daty));
+      karta.appendChild(tytul);
+
+      const w1 = el("div", "sekretarz-wiersz");
+      w1.appendChild(el("span", "sekretarz-rola", "I Sekretarz"));
+      w1.appendChild(el("span", "sekretarz-imie", okr.sekretarz1));
+      karta.appendChild(w1);
+
+      const w2 = el("div", "sekretarz-wiersz");
+      w2.appendChild(el("span", "sekretarz-rola", "II Sekretarz"));
+      w2.appendChild(el("span", "sekretarz-imie", okr.sekretarz2));
+      karta.appendChild(w2);
+    });
+
+    if (blok.opis) {
+      karta.appendChild(el("div", "okres-opis", blok.opis));
+    }
+
+    kontener.appendChild(karta);
+  });
+})();
+</script>
+</body>
+</html>
