@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakładki — Serwer PRL</title>
+<meta name="theme-color" content="#b5152b">
+<meta property="og:title" content="Rzeczpospolita PRL — Dokumenty i Rejestry">
+<meta property="og:description" content="Regulamin, Uczelnia, Konstytucja, Spis sekretarzy oraz Order Orła Czerwonego.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23c9a84c'>★</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .widok-zakladki{ display: none; }
+  .widok-zakladki.aktywny{ display: block; }
+
+  /* REGULAMIN */
+  .karta-regulamin{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; overflow: hidden; }
+  .punkt-regulaminu{ display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 18px 22px; border-bottom: 1px solid var(--linia); }
+  .punkt-regulaminu:last-child{ border-bottom: none; }
+  .punkt-numer{ font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: var(--zloto); }
+  .punkt-tresc{ font-size: 14px; color: var(--tekst); padding-top: 2px; }
+  .punkt-tresc strong{ color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+  .zasada-akceptacji{ margin-top: 20px; padding: 20px 22px; text-align: center; background: rgba(201,168,76,0.08); border: 1px solid var(--zloto); border-radius: 6px; color: var(--zloto-jasne); font-family: 'Oswald', sans-serif; font-size: 14px; }
+
+  /* UCZELNIA */
+  .statystyki{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .stat{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 16px; text-align: center; }
+  .stat-liczba{ font-family: 'Oswald', sans-serif; font-size: 32px; font-weight: 700; color: var(--zloto-jasne); line-height: 1.1; }
+  .stat-etykieta{ margin-top: 4px; font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; }
+  @media (max-width: 480px){ .stat-liczba{ font-size: 26px; } .stat{ padding: 12px 8px; } .stat-etykieta{ font-size: 10px; } }
+
+  .podzakladki{ display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--linia); }
+  .podzakladka{ font-family: 'Oswald', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; padding: 9px 18px; background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 4px; color: var(--tekst-przygaszony); cursor: pointer; transition: all 0.2s ease; }
+  .podzakladka:hover{ color: var(--tekst); border-color: var(--zloto); }
+  .podzakladka.aktywna{ color: var(--zloto-jasne); border-color: var(--zloto); background: rgba(201,168,76,0.10); }
+  .podzakladka .ile{ margin-left: 6px; color: var(--czerwien-jasna); }
+  .panel-uczelni{ display: none; }
+  .panel-uczelni.aktywny{ display: block; }
+
+  .siatka-kart{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .karta-osoby{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; padding: 24px; position: relative; transition: border-color 0.2s ease; }
+  .karta-osoby:hover{ border-color: var(--zloto); }
+  .karta-osoby::before{ content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--czerwien); border-radius: 6px 0 0 6px; }
+  .osoba-gora{ display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--linia); }
+  .osoba-ikona{ font-size: 26px; color: var(--zloto); }
+  .osoba-imie{ font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: var(--tekst); text-transform: uppercase; overflow-wrap: anywhere; }
+  .osoba-etykieta{ margin-left: auto; font-size: 11px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid var(--linia); border-radius: 4px; padding: 2px 8px; white-space: nowrap; }
+  .osoba-podpis{ font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .osoba-stanowisko{ font-size: 15px; color: var(--zloto-jasne); font-weight: 700; }
+  .lista-gwiazdek{ list-style: none; }
+  .lista-gwiazdek li{ position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 14px; color: var(--zloto-jasne); font-weight: 700; }
+  .lista-gwiazdek li::before{ content: "★"; position: absolute; left: 0; color: var(--czerwien-jasna); font-size: 12px; }
+  .przedmiot-nazwa{ font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 600; color: var(--tekst); margin-bottom: 8px; }
+  .przedmiot-prowadzacy{ font-size: 14px; color: var(--zloto-jasne); }
+  .brak-danych{ padding: 28px 22px; text-align: center; color: var(--tekst-przygaszony); font-style: italic; background: var(--tlo-karta); border: 1px dashed var(--linia); border-radius: 6px; }
+  .blad-danych{ margin-top: 24px; padding: 16px 20px; border: 1px solid var(--czerwien-jasna); background: rgba(216,30,58,0.08); border-radius: 6px; color: var(--tekst); font-size: 14px; }
+
+  /* KONSTYTUCJA */
+  .rozdzial-karta{ margin-bottom: 20px; }
+  .rozdzialtytul{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--zloto-jasne);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linia);
+  }
+  .podpunkt-lista{ margin-top: 6px; margin-left: 20px; list-style-type: none; }
+  .podpunkt-lista li{ position: relative; padding-left: 18px; margin-bottom: 4px; font-size: 14px; }
+  .podpunkt-lista li::before{ content: "•"; position: absolute; left: 0; color: var(--zloto); }
+  .nowelizacja-karta{ border-color: var(--zloto); }
+  .nowelizacja-wiersz{ display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px dashed var(--linia); font-size: 14px; }
+  .nowelizacja-etykieta{ color: var(--tekst-przygaszony); text-transform: uppercase; font-size: 12px; letter-spacing: 0.06em; font-family: 'Oswald', sans-serif; }
+  .nowelizacja-wartosc{ color: var(--zloto-jasne); font-weight: 700; font-family: 'Oswald', sans-serif; font-size: 16px; }
+  .nowelizacja-opis{ margin-top: 14px; }
+
+  /* SPIS SEKRETARZY */
+  .okres-karta{ margin-bottom: 20px; }
+  .okres-tytul{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--zloto-jasne);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linia);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .okres-tytul-kolejny{ margin-top: 26px; }
+  .sekretarz-wiersz{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--linia);
+    font-size: 14px;
+  }
+  .sekretarz-wiersz:last-of-type{ border-bottom: none; margin-bottom: 12px; }
+  .sekretarz-rola{
+    color: var(--tekst-przygaszony);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    font-family: 'Oswald', sans-serif;
+  }
+  .sekretarz-imie{
+    color: var(--zloto-jasne);
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+  }
+  .okres-opis{
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--linia);
+    font-size: 14px;
+    color: var(--tekst);
+  }
+
+  /* ORDER ORŁA CZERWONEGO */
+  .licznik-odznaczonych{ font-size: 12px; color: var(--tekst-przygaszony); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; font-family: 'Oswald', sans-serif; }
+  .licznik-odznaczonych strong{ color: var(--zloto-jasne); font-size: 15px; }
+  .lista-odznaczen{ background: var(--tlo-karta); border: 1px solid var(--linia); border-radius: 6px; overflow: hidden; }
+  .odznaczenie{ display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--linia); }
+  .odznaczenie:last-child{ border-bottom: none; }
+  .odznaczenie-medal{ font-size: 26px; color: var(--zloto); flex-shrink: 0; }
+  .odznaczenie-imie{ font-family: 'Oswald', sans-serif; font-size: 19px; font-weight: 600; color: var(--tekst); }
+  .odznaczenie-powod{ font-size: 13px; color: var(--tekst-przygaszony); margin-top: 2px; }
+  .odznaczenie-data{ font-size: 12px; color: var(--zloto-jasne); white-space: nowrap; text-align: right; }
+  .odznaczenie-brak{ padding: 24px 22px; text-align: center; color: var(--tekst-przygaszony); font-size: 14px; font-style: italic; }
+  @media (max-width: 480px){
+    .odznaczenie{ grid-template-columns: auto 1fr; }
+    .odznaczenie-data{ grid-column: 2; text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="naglowek">
+    <span class="gwiazda" id="naglowekIkona">☭</span>
+    <h1 class="naglowek-tytul" id="naglowekTytul">Regulamin Serwera</h1>
+    <p class="naglowek-podtytul" id="naglowekPodtytul">Zasady Obowiązujące Wszystkich Towarzyszy</p>
+  </header>
+
+  <nav class="zakladki" aria-label="Zakładki">
+    <a class="zakladka" href="index.html">Panel Główny</a>
+    <button type="button" class="zakladka" data-tab="regulamin">Regulamin</button>
+    <button type="button" class="zakladka" data-tab="uczelnia">Uczelnia</button>
+    <button type="button" class="zakladka" data-tab="konstytucja">Konstytucja</button>
+    <button type="button" class="zakladka" data-tab="sekretarze">Spis sekretarzy</button>
+    <button type="button" class="zakladka" data-tab="order">Order Orła Czerwonego</button>
+  </nav>
+
+  <div class="kontener">
+
+    <!-- ==================== 1. REGULAMIN ==================== -->
+    <div class="widok-zakladki" id="widok-regulamin">
+      <section class="sekcja">
+        <div class="karta-regulamin">
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">1</span>
+            <span class="punkt-tresc">🤝 <strong>Szacunek:</strong> Szanuj każdego Towarzysza. Zero obrażania, nękania, dyskryminacji czy podszywania się pod innych.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">2</span>
+            <span class="punkt-tresc">🚫 <strong>Porządek:</strong> Zakaz spamu, floodu, nieautoryzowanych reklam oraz treści nielegalnych, pornograficznych i drastycznych.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">3</span>
+            <span class="punkt-tresc">👥 <strong>Multikonta:</strong> Zakaz zakładania i korzystania z wielu kont (multikont) na serwerze.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">4</span>
+            <span class="punkt-tresc">🎯 <strong>Tematyka:</strong> Korzystaj z odpowiednich kanałów i trzymaj się ich przeznaczenia.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">5</span>
+            <span class="punkt-tresc">🔒 <strong>Prywatność:</strong> Nigdy nie publikuj cudzych danych osobowych bez zgody właściciela.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">6</span>
+            <span class="punkt-tresc">⚖️ <strong>Dyscyplina:</strong> Szanuj decyzje Administracji i nie omijaj nałożonych kar.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">7</span>
+            <span class="punkt-tresc">🔨 <strong>Sankcje:</strong> Za złamanie zasad grozi: ostrzeżenie, mute, ban czasowy lub permanentny.</span>
+          </div>
+          <div class="punkt-regulaminu">
+            <span class="punkt-numer">8</span>
+            <span class="punkt-tresc">📜 <strong>Prawo:</strong> Administracja ma prawo decydować w sprawach nieujętych w regulaminie.</span>
+          </div>
+        </div>
+        <div class="zasada-akceptacji">Dołączając do serwera, każdy Towarzysz akceptuje powyższe zasady.</div>
+      </section>
+    </div>
+
+    <!-- ==================== 2. UCZELNIA ==================== -->
+    <div class="widok-zakladki" id="widok-uczelnia">
+      <div class="blad-danych" id="bladDanych" style="display:none;">Nie udało się wczytać pliku <strong>stanowiska.js</strong>. Sprawdź, czy leży w tym samym folderze co ta strona.</div>
+
+      <section class="sekcja" id="sekcjaStatystyk">
+        <div class="statystyki">
+          <div class="stat"><div class="stat-liczba" id="statZarzadcy">0</div><div class="stat-etykieta">Zarządców</div></div>
+          <div class="stat"><div class="stat-liczba" id="statWykladowcy">0</div><div class="stat-etykieta">Wykładowców</div></div>
+          <div class="stat"><div class="stat-liczba" id="statPrzedmioty">0</div><div class="stat-etykieta">Przedmiotów</div></div>
+        </div>
+      </section>
+
+      <section class="sekcja">
+        <div class="podzakladki" role="tablist">
+          <button class="podzakladka" type="button" role="tab" data-panel="zarzadcy">Zarządcy Uczelni<span class="ile" id="ileZarzadcy"></span></button>
+          <button class="podzakladka" type="button" role="tab" data-panel="wykladowcy">Wykładowcy<span class="ile" id="ileWykladowcy"></span></button>
+          <button class="podzakladka" type="button" role="tab" data-panel="przedmioty">Przedmioty<span class="ile" id="ilePrzedmioty"></span></button>
+        </div>
+
+        <div class="panel-uczelni" id="panel-zarzadcy" role="tabpanel"><div class="siatka-kart" id="listaZarzadcy"></div></div>
+        <div class="panel-uczelni" id="panel-wykladowcy" role="tabpanel"><div class="siatka-kart" id="listaWykladowcy"></div></div>
+        <div class="panel-uczelni" id="panel-przedmioty" role="tabpanel"><div class="siatka-kart" id="listaPrzedmioty"></div></div>
+      </section>
+    </div>
+
+    <!-- ==================== 3. KONSTYTUCJA ==================== -->
+    <div class="widok-zakladki" id="widok-konstytucja">
+      <section class="sekcja">
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział I. Postanowienia Ogólne</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Serwer oficjalnie jest świecki.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Na serwerze panuje ustrój jednopartyjny.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> Hymnem serwera jest <em>Międzynarodówka</em>.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> Wszystkim obywatelom przysługują równe prawa oraz jednakowy obowiązek ponoszenia konsekwencji za swoje zachowania.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział II. Członkostwo w Partii</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Jedno miejsce w Partii przypada na pięciu członków posiadających rangę Towarzysza.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Członkowie Partii posiadają prawo do:</p>
+          <ul class="podpunkt-lista">
+            <li>proponowania ustaw i wniosków,</li>
+            <li>głosowania w sprawach ustawowych,</li>
+            <li>kandydowania na stanowisko I Sekretarza,</li>
+            <li>ubiegania się o awans do struktur ZOMO oraz Administracji.</li>
+          </ul>
+          <p class="artykul-p"><strong>Art. 3.</strong> Członków Partii mianuje I Sekretarz.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> Członków Partii może odwołać I Sekretarz lub ponad ⅔ członków Partii w drodze głosowania.</p>
+          <p class="artykul-p"><strong>Art. 5.</strong> Wymagania wobec kandydata na członka Partii:</p>
+          <ul class="podpunkt-lista">
+            <li>obecność na serwerze przez co najmniej 7 dni,</li>
+            <li>brak członkostwa w strukturach opozycji,</li>
+            <li>wykazywanie się aktywnością w życiu społeczności.</li>
+          </ul>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział III. I Sekretarz</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Kadencja I Sekretarza trwa 2 miesiące.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> I Sekretarz ma prawo złożyć rezygnację w dowolnym momencie.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> I Sekretarz wybierany jest w głosowaniu ogólnoserwerowym.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> Obowiązki I Sekretarza obejmują:</p>
+          <ul class="podpunkt-lista">
+            <li>organizowanie głosowań nad złożonymi wnioskami i ustawami,</li>
+            <li>wprowadzanie zmian organizacyjnych za pośrednictwem Administracji,</li>
+            <li>koordynowanie bieżącej pracy Administracji.</li>
+          </ul>
+          <p class="artykul-p"><strong>Art. 5.</strong> I Sekretarz ma prawo wymieniać członków Partii spełniających wymogi z Art. 5 Rozdziału II, dokonując maksymalnie 3 zmian dziennie.</p>
+          <p class="artykul-p"><strong>Art. 6.</strong> I Sekretarz nie może samodzielnie mianować się Administratorem.</p>
+          <p class="artykul-p"><strong>Art. 7.</strong> W sprawach kluczowych I Sekretarz może zorganizować referendum ogólnoserwerowe (referendum nie może dotyczyć przyjęcia ustawy ani zmiany Konstytucji).</p>
+          <p class="artykul-p"><strong>Art. 8.</strong> I Sekretarz może zostać odwołany większością ponad ¾ głosów obywateli w głosowaniu ogólnoserwerowym.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział IV. II Sekretarz</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> II Sekretarza mianuje I Sekretarz jako swojego oficjalnego zastępcę.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Podczas nieobecności I Sekretarza, II Sekretarz przejmuje jego obowiązki do czasu powrotu przełożonego.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> W przypadku rezygnacji I Sekretarza, II Sekretarz automatycznie obejmuje stanowisko I Sekretarza i wyznacza swojego nowego zastępcę.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> I Sekretarz nie może odwołać II Sekretarza przez okres 20 dni od dnia jego powołania.</p>
+          <p class="artykul-p"><strong>Art. 5.</strong> Obowiązki II Sekretarza obejmują:</p>
+          <ul class="podpunkt-lista">
+            <li>koordynowanie działań i pracy formacji ZOMO,</li>
+            <li>nadzorowanie przestrzegania Regulaminu na serwerze.</li>
+          </ul>
+          <p class="artykul-p"><strong>Art. 6.</strong> II Sekretarz nie może samodzielnie mianować się członkiem ZOMO.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział V. ZOMO</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Skład ZOMO powołuje II Sekretarz po objęciu urzędu.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Do formacji ZOMO mogą zostać powołani wyłącznie członkowie Partii.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> ZOMO zobowiązane jest do:</p>
+          <ul class="podpunkt-lista">
+            <li>czuwania nad przestrzeganiem Regulaminu serwera,</li>
+            <li>tworzenia ankiet społecznych minimum raz na 2 tygodnie.</li>
+          </ul>
+          <p class="artykul-p"><strong>Art. 4.</strong> W przypadku nadużycia uprawnień przez członka ZOMO, zostanie na niego nałożona kara bez wcześniejszego ostrzeżenia.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział VI. Administracja</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Administrację powołuje I Sekretarz na początku swojej kadencji.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Funkcję Administratora mogą sprawować wyłącznie członkowie Partii.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> Administracja zobowiązana jest do:</p>
+          <ul class="podpunkt-lista">
+            <li>wdrażania przegłosowanych ustaw oraz zaakceptowanych wniosków,</li>
+            <li>sprawnego wykonywania poleceń I Sekretarza.</li>
+          </ul>
+          <p class="artykul-p"><strong>Art. 4.</strong> Za nadużycie uprawnień grozi kara natychmiastowa bez ostrzeżenia, a w przypadku rażących przewinień — wykluczenie z serwera (ban).</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział VII. Założyciel Serwera</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Założyciel Serwera sprawuje jednocześnie funkcję Prezesa Banku.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Założyciel Serwera nie może ubiegać się ani piastować stanowiska I lub II Sekretarza.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> W przypadku stwierdzenia bezpośredniego łamania Konstytucji lub Regulaminu, Założyciel ma prawo do natychmiastowego wyciągnięcia konsekwencji.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> Jeśli działania organów władzy stwarzają uzasadnione zagrożenie zniszczenia lub znacznego osłabienia serwera, Założyciel ma prawo odwołać daną władzę po podaniu formalnego powodu.</p>
+          <p class="artykul-p"><strong>Art. 5.</strong> Założyciel Serwera dokonuje klasyfikacji składanych ustaw, wniosków i propozycji zmian w Konstytucji.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział VIII. Ustawy i Wnioski</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Inicjatywa ustawodawcza oraz prawo do składania wniosków przysługują członkom Partii oraz Opozycji.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Wnioski rozpatrywane są bezpośrednio przez I Sekretarza bez konieczności przeprowadzania głosowania.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> Przed poddaniem pod głosowanie, projekt ustawy podlega weryfikacji pod kątem zgodności z Konstytucją oraz oficjalnej klasyfikacji przez Założyciela Serwera.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> Po zakwalifikowaniu ustawy, I Sekretarz zarządza 24-godzinne głosowanie. Ustawę uważa się za przyjętą, gdy opowie się za nią większość głosujących członków Partii.</p>
+          <p class="artykul-p"><strong>Art. 5.</strong> W przypadku równej liczby głosów (remisu), o przyjęciu ustawy decyduje I Sekretarz.</p>
+          <p class="artykul-p"><strong>Art. 6.</strong> Po przyjęciu ustawy w głosowaniu, I Sekretarz może ją podpisując wdrożyć lub zgłosić weto. Weto I Sekretarza zostaje odrzucone, jeśli w ponownym głosowaniu ustawa uzyska co najmniej ⅔ głosów.</p>
+          <p class="artykul-p"><strong>Art. 7. Definicja Wniosku:</strong> Wnioskiem jest zgłoszenie nieprawidłowości w zachowaniu organów władzy lub propozycja drobnej zmiany kosmetycznej (np. zmiana nazwy kanału, dodanie emotek/naklejek).</p>
+          <p class="artykul-p"><strong>Art. 8. Definicja Ustawy:</strong> Ustawą jest propozycja istotnych zmian w Regulaminie, ekonomii serwera, strukturze kanałów lub wprowadzania nowych botów i funkcji.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział IX. Wybory</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Wybory na stanowisko I Sekretarza zarządza i przeprowadza Założyciel Serwera.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Kandydować na stanowisko I Sekretarza mogą wyłącznie członkowie Partii.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> Kandydaci zobowiązani są do zaprezentowania swoich programów wyborczych na dedykowanym kanale w wyznaczonym terminie pod rygorem skreślenia z listy kandydatów.</p>
+          <p class="artykul-p"><strong>Art. 4.</strong> Kandydat, który w I turze uzyska ponad 50% oddanych głosów, zostaje ogłoszony zwycięzcą wyborów.</p>
+          <p class="artykul-p"><strong>Art. 5.</strong> W przypadku remisu uniemożliwiającego wyłonienie dwóch kandydatów do II tury, przeprowadza się dogrywkę rozstrzygającą awans.</p>
+          <p class="artykul-p"><strong>Art. 6.</strong> Rezygnacja kandydata w trakcie trwania wyborów unieważnia wszystkie oddane na niego głosy od I tury.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział X. Order Orła Czerwonego</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Order Orła Czerwonego stanowi najwyższe odznaczenie państwowe na serwerze.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Order nadaje Założyciel Serwera za wybitne zasługi, po uzyskaniu akceptacji I oraz II Sekretarza.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> Pozbawienie odznaczenia może nastąpić wyłącznie za zgodą Założyciela Serwera, I Sekretarza oraz II Sekretarza.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział XI. Zmiana Konstytucji</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Inicjatywa zmiany Konstytucji przysługuje członkom Partii oraz Opozycji.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Po sklasyfikowaniu projektu przez Założyciela Serwera, I Sekretarz przeprowadza głosowanie. Do uchwalenia zmiany Konstytucji wymagana jest większość co najmniej ⅘ głosów (80%). Zmiana Konstytucji nie podlega prawu weta I Sekretarza i wchodzi w życie od pierwszego poniedziałku po głosowaniu.</p>
+        </div>
+
+        <div class="karta rozdzial-karta">
+          <h2 class="rozdzialtytul">Rozdział XII. Przepisy Końcowe</h2>
+          <p class="artykul-p"><strong>Art. 1.</strong> Niniejsza Konstytucja obowiązuje na serwerach z serii PRL od dnia 1 września 2026 r.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Wyłączne prawo do wprowadzania autoryzowanych zmian i edycji tekstu niniejszego dokumentu posiadają Maloy oraz Bluetes.</p>
+        </div>
+
+        <div class="karta rozdzial-karta nowelizacja-karta">
+          <h2 class="rozdzialtytul">Informacje o Nowelizacji Konstytucji</h2>
+          <div class="nowelizacja-wiersz">
+            <span class="nowelizacja-etykieta">Data nowelizacji</span>
+            <span class="nowelizacja-wartosc">2 listopada 2026 r.</span>
+          </div>
+          <div class="nowelizacja-wiersz">
+            <span class="nowelizacja-etykieta">Uchwalenie pierwotne</span>
+            <span class="nowelizacja-wartosc">30 sierpnia 2026 r.</span>
+          </div>
+          <div class="nowelizacja-wiersz">
+            <span class="nowelizacja-etykieta">Wejście w życie</span>
+            <span class="nowelizacja-wartosc">1 września 2026 r.</span>
+          </div>
+          <p class="artykul-p nowelizacja-opis">Niniejszy tekst jednolity uwzględnia nowelizację Konstytucji PRL z dnia 2 listopada 2026 r.</p>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- ==================== 4. SPIS SEKRETARZY ==================== -->
+    <div class="widok-zakladki" id="widok-sekretarze">
+      <section class="sekcja" id="listaKadencji"></section>
+    </div>
+
+    <!-- ==================== 5. ORDER ORŁA CZERWONEGO ==================== -->
+    <div class="widok-zakladki" id="widok-order">
+      <section class="sekcja">
+        <div class="sekcja-tytul">Zasady Nadawania Orderu</div>
+        <div class="karta">
+          <p class="artykul-p"><strong>Art. 1.</strong> Order Orła Czerwonego stanowi najwyższe odznaczenie państwowe na serwerze.</p>
+          <p class="artykul-p"><strong>Art. 2.</strong> Order nadaje Założyciel Serwera za wybitne zasługi, po uzyskaniu akceptacji I oraz II Sekretarza.</p>
+          <p class="artykul-p"><strong>Art. 3.</strong> Pozbawienie odznaczenia może nastąpić wyłącznie za zgodą Założyciela Serwera, I Sekretarza oraz II Sekretarza.</p>
+        </div>
+      </section>
+
+      <section class="sekcja">
+        <div class="sekcja-tytul">Rejestr Odznaczonych — Order Orła Czerwonego</div>
+        <div class="licznik-odznaczonych">Liczba odznaczonych: <strong id="licznikOdznaczonych">0</strong></div>
+        <div class="lista-odznaczen" id="listaOdznaczen"></div>
+      </section>
+    </div>
+
+    <div class="stopka">
+      <a class="przycisk-discord" href="https://discord.gg/NuT52P6kge" target="_blank" rel="noopener">Dołącz do serwera Discord</a><br>
+      <span id="stopkaPodpis">Rzeczpospolita PRL</span>
+    </div>
+
+  </div>
+
+<script src="stanowiska.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  function el(tag, klasa, tekst){
+    const e = document.createElement(tag);
+    if (klasa) e.className = klasa;
+    if (tekst !== undefined && tekst !== null) e.textContent = tekst;
+    return e;
+  }
+
+  // --- KONFIGURACJA NAGŁÓWKÓW ZAKŁADEK ---
+  const META_ZAKLADEK = {
+    regulamin: {
+      ikona: "☭",
+      tytul: "Regulamin Serwera",
+      podtytul: "Zasady Obowiązujące Wszystkich Towarzyszy",
+      stopka: "Rzeczpospolita PRL"
+    },
+    uczelnia: {
+      ikona: "★",
+      tytul: "Uczelnia PRL",
+      podtytul: "Zarząd Uczelni, Wykładowcy i Przedmioty",
+      stopka: "Rzeczpospolita PRL — Wydział Oświaty i Nauki"
+    },
+    konstytucja: {
+      ikona: "★",
+      tytul: "Konstytucja PRL",
+      podtytul: "Tekst Jednolity z Nowelizacją",
+      stopka: "Rzeczpospolita PRL — Wydział Prawno-Administracyjny"
+    },
+    sekretarze: {
+      ikona: "★",
+      tytul: "Spis Sekretarzy",
+      podtytul: "Chronologiczna Historia Przywództwa Serwera PRL",
+      stopka: "Rzeczpospolita PRL — Wydział Historyczno-Polityczny"
+    },
+    order: {
+      ikona: "☭",
+      tytul: "Order Orła Czerwonego",
+      podtytul: "Najwyższe Odznaczenie Państwowe",
+      stopka: "Rzeczpospolita PRL — Kapituła Orderu"
+    }
+  };
+
+  // --- PRZEŁĄCZANIE GŁÓWNYCH ZAKŁADEK ---
+  const przyciskiZakladek = document.querySelectorAll(".zakladka[data-tab]");
+  const widoki = document.querySelectorAll(".widok-zakladki");
+
+  function aktywujZakladke(nazwa, zapiszHash){
+    if (!META_ZAKLADEK[nazwa]) nazwa = "regulamin";
+    const meta = META_ZAKLADEK[nazwa];
+
+    document.getElementById("naglowekIkona").textContent = meta.ikona;
+    document.getElementById("naglowekTytul").textContent = meta.tytul;
+    document.getElementById("naglowekPodtytul").textContent = meta.podtytul;
+    document.getElementById("stopkaPodpis").textContent = meta.stopka;
+    document.title = meta.tytul + " — Serwer PRL";
+
+    przyciskiZakladek.forEach(function(btn){
+      btn.classList.toggle("aktywna", btn.dataset.tab === nazwa);
+    });
+
+    widoki.forEach(function(w){
+      w.classList.toggle("aktywny", w.id === "widok-" + nazwa);
+    });
+
+    if (zapiszHash && history.replaceState) {
+      history.replaceState(null, "", "#" + nazwa);
+    }
+  }
+
+  przyciskiZakladek.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      aktywujZakladke(btn.dataset.tab, true);
+    });
+  });
+
+  window.addEventListener("hashchange", function(){
+    aktywujZakladke(location.hash.replace("#", ""), false);
+  });
+
+  aktywujZakladke(location.hash.replace("#", "") || "regulamin", false);
+
+  // --- RENDEROWANIE: SPIS SEKRETARZY ---
+  const kontenerKadencji = document.getElementById("listaKadencji");
+  const daneSekretarzy = (typeof historiaSekretarzy !== "undefined") ? historiaSekretarzy : [];
+
+  daneSekretarzy.forEach(function(blok){
+    const karta = el("div", "karta okres-karta");
+
+    (blok.okresy || []).forEach(function(okr, idx){
+      const tytul = el("div", idx > 0 ? "okres-tytul okres-tytul-kolejny" : "okres-tytul");
+      tytul.appendChild(el("span", null, okr.daty));
+      karta.appendChild(tytul);
+
+      const w1 = el("div", "sekretarz-wiersz");
+      w1.appendChild(el("span", "sekretarz-rola", "I Sekretarz"));
+      w1.appendChild(el("span", "sekretarz-imie", okr.sekretarz1));
+      karta.appendChild(w1);
+
+      const w2 = el("div", "sekretarz-wiersz");
+      w2.appendChild(el("span", "sekretarz-rola", "II Sekretarz"));
+      w2.appendChild(el("span", "sekretarz-imie", okr.sekretarz2));
+      karta.appendChild(w2);
+    });
+
+    if (blok.opis) {
+      karta.appendChild(el("div", "okres-opis", blok.opis));
+    }
+
+    kontenerKadencji.appendChild(karta);
+  });
+
+  // --- RENDEROWANIE: ORDER ORŁA CZERWONEGO ---
+  const kontenerOrder = document.getElementById("listaOdznaczen");
+  const daneOrder = (typeof listaOdznaczonychObywateli !== "undefined") ? listaOdznaczonychObywateli : [];
+
+  document.getElementById("licznikOdznaczonych").textContent = daneOrder.length;
+
+  if (daneOrder.length === 0) {
+    kontenerOrder.appendChild(el("div", "odznaczenie-brak", "Brak informacji o nadanych odznaczeniach."));
+  } else {
+    daneOrder.forEach(function(osoba){
+      const wiersz = el("div", "odznaczenie");
+      wiersz.appendChild(el("span", "odznaczenie-medal", "★"));
+
+      const opis = document.createElement("div");
+      opis.appendChild(el("div", "odznaczenie-imie", osoba.imie));
+      opis.appendChild(el("div", "odznaczenie-powod", osoba.powod || ""));
+
+      wiersz.appendChild(opis);
+      wiersz.appendChild(el("span", "odznaczenie-data", osoba.data || ""));
+      kontenerOrder.appendChild(wiersz);
+    });
+  }
+
+  // --- RENDEROWANIE: UCZELNIA ---
+  function pokazBrak(kontener, tekst){
+    kontener.className = "";
+    kontener.appendChild(el("div", "brak-danych", tekst));
+  }
+
+  const daneUczelniOk = (typeof listaWykladowcow !== "undefined") && (typeof listaZarzadcowUczelni !== "undefined");
+  if (!daneUczelniOk) {
+    document.getElementById("bladDanych").style.display = "block";
+    document.getElementById("sekcjaStatystyk").style.display = "none";
+  } else {
+    const zarzadcy = listaZarzadcowUczelni.filter(function(z){ return !/^brak/i.test(String(z.imie || "")); });
+    const wykladowcy = listaWykladowcow.map(function(w){
+      const przedmioty = Array.isArray(w.przedmioty) ? w.przedmioty
+        : String(w.powod || "").split(",").map(function(s){ return s.trim(); }).filter(Boolean);
+      return { imie: w.imie, przedmioty: przedmioty, etykieta: w.data || "Wykładowca", ikona: w.ikona || "🎓" };
+    });
+
+    const mapaPrzedmiotow = new Map();
+    wykladowcy.forEach(function(w){
+      w.przedmioty.forEach(function(p){
+        if (!mapaPrzedmiotow.has(p)) mapaPrzedmiotow.set(p, []);
+        mapaPrzedmiotow.get(p).push(w.imie);
+      });
+    });
+    const przedmioty = Array.from(mapaPrzedmiotow.keys()).sort(function(a, b){ return a.localeCompare(b, "pl"); });
+
+    document.getElementById("statZarzadcy").textContent = zarzadcy.length;
+    document.getElementById("statWykladowcy").textContent = wykladowcy.length;
+    document.getElementById("statPrzedmioty").textContent = przedmioty.length;
+    document.getElementById("ileZarzadcy").textContent = "(" + zarzadcy.length + ")";
+    document.getElementById("ileWykladowcy").textContent = "(" + wykladowcy.length + ")";
+    document.getElementById("ilePrzedmioty").textContent = "(" + przedmioty.length + ")";
+
+    const kZarzadcy = document.getElementById("listaZarzadcy");
+    if (!zarzadcy.length) {
+      pokazBrak(kZarzadcy, "Brak zarządców. Wydział nieobsadzony.");
+    } else {
+      zarzadcy.forEach(function(z){
+        const karta = el("div", "karta-osoby");
+        const gora = el("div", "osoba-gora");
+        gora.appendChild(el("span", "osoba-ikona", z.ikona || "🏛️"));
+        gora.appendChild(el("div", "osoba-imie", z.imie));
+        if (z.data) gora.appendChild(el("span", "osoba-etykieta", z.data));
+        karta.appendChild(gora);
+        karta.appendChild(el("div", "osoba-podpis", "Stanowisko:"));
+        karta.appendChild(el("div", "osoba-stanowisko", z.powod || "—"));
+        kZarzadcy.appendChild(karta);
+      });
+    }
+
+    const kWykladowcy = document.getElementById("listaWykladowcy");
+    if (!wykladowcy.length) {
+      pokazBrak(kWykladowcy, "Brak wykładowców.");
+    } else {
+      wykladowcy.forEach(function(w){
+        const karta = el("div", "karta-osoby");
+        const gora = el("div", "osoba-gora");
+        gora.appendChild(el("span", "osoba-ikona", w.ikona));
+        gora.appendChild(el("div", "osoba-imie", w.imie));
+        karta.appendChild(gora);
+        karta.appendChild(el("div", "osoba-podpis", "Prowadzone przedmioty:"));
+        const ul = el("ul", "lista-gwiazdek");
+        w.przedmioty.forEach(function(p){ ul.appendChild(el("li", null, p)); });
+        karta.appendChild(ul);
+        kWykladowcy.appendChild(karta);
+      });
+    }
+
+    const kPrzedmioty = document.getElementById("listaPrzedmioty");
+    if (!przedmioty.length) {
+      pokazBrak(kPrzedmioty, "Brak przedmiotów.");
+    } else {
+      przedmioty.forEach(function(p){
+        const karta = el("div", "karta-osoby");
+        karta.appendChild(el("div", "przedmiot-nazwa", p));
+        karta.appendChild(el("div", "osoba-podpis", "Prowadzi:"));
+        karta.appendChild(el("div", "przedmiot-prowadzacy", mapaPrzedmiotow.get(p).join(", ")));
+        kPrzedmioty.appendChild(karta);
+      });
+    }
+
+    const podPrzyciski = document.querySelectorAll(".podzakladka");
+    const podPanele = document.querySelectorAll(".panel-uczelni");
+
+    function pokazPodzakladke(nazwa){
+      podPrzyciski.forEach(function(b){
+        const aktywny = b.dataset.panel === nazwa;
+        b.classList.toggle("aktywna", aktywny);
+        b.setAttribute("aria-selected", aktywny ? "true" : "false");
+      });
+      podPanele.forEach(function(p){
+        p.classList.toggle("aktywny", p.id === "panel-" + nazwa);
+      });
+    }
+
+    podPrzyciski.forEach(function(b){
+      b.addEventListener("click", function(){
+        pokazPodzakladke(b.dataset.panel);
+      });
+    });
+
+    pokazPodzakladke("wykladowcy");
+  }
+})();
+</script>
+</body>
+</html>
