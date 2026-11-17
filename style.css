@@ -1,0 +1,156 @@
+:root{
+  --tlo: #141210;
+  --tlo-karta: #1c1a17;
+  --tlo-karta-jasniej: #242119;
+  --linia: #322c22;
+  --czerwien: #b5152b;
+  --czerwien-jasna: #d81e3a;
+  --zloto: #c9a84c;
+  --zloto-jasne: #e3c878;
+  --tekst: #ede7d9;
+  --tekst-przygaszony: #9a9284;
+  --zielony: #4caf6d;
+}
+
+*{ box-sizing: border-box; margin: 0; padding: 0; }
+
+body{
+  background: var(--tlo);
+  color: var(--tekst);
+  font-family: 'PT Sans', sans-serif;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+
+h1, h2, h3, .naglowek-tytul{
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+a{ color: var(--zloto); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+.kontener{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+.kontener-szeroki{ max-width: 960px; }
+.kontener-waski{ max-width: 820px; }
+
+/* NAGŁÓWEK */
+.naglowek{
+  position: relative;
+  text-align: center;
+  padding: 64px 20px 40px;
+  border-bottom: 3px solid var(--czerwien);
+  background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%);
+  overflow: hidden;
+}
+
+.naglowek::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--czerwien), var(--zloto), var(--czerwien));
+}
+
+.gwiazda{
+  font-size: 28px;
+  color: var(--zloto);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.naglowek-tytul{
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 700;
+  color: var(--tekst);
+  text-transform: uppercase;
+}
+
+.naglowek-podtytul{
+  margin-top: 10px;
+  font-size: clamp(13px, 2.2vw, 16px);
+  color: var(--zloto-jasne);
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* SEKCJE I KARTY */
+.sekcja{ margin-top: 40px; }
+
+.sekcja-tytul{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--zloto);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--linia);
+}
+
+.karta{
+  background: var(--tlo-karta);
+  border: 1px solid var(--linia);
+  border-radius: 6px;
+  padding: 24px;
+  position: relative;
+}
+
+.karta::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--czerwien);
+  border-radius: 6px 0 0 6px;
+}
+
+.artykul-p{
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--tekst);
+}
+.artykul-p:first-of-type{ margin-top: 0; }
+.artykul-p strong{
+  color: var(--zloto);
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* STOPKA */
+.stopka{
+  margin-top: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--tekst-przygaszony);
+  padding-top: 24px;
+  border-top: 1px solid var(--linia);
+}
+
+.przycisk-discord{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
+  border: 1px solid var(--czerwien-jasna);
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.przycisk-discord:hover{
+  opacity: 0.85;
+  text-decoration: none;
+}
