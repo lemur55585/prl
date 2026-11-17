@@ -77,9 +77,10 @@ const listaOdznaczonychObywateli = [
 ];
 
 // --- 5. ZARZĄDCY UCZELNI ---
-// Pusta lista [] wyświetli komunikat „Wydział nieobsadzony”.
 const listaZarzadcowUczelni = [
-  // { imie: "Imię", powod: "Rektor Uczelni", data: "Zarząd", ikona: "🏛️" }
+  { imie: "Maloy",    powod: "Zarząd Uczelni", data: "Zarząd", ikona: "🏛️" },
+  { imie: "Hirohito", powod: "Zarząd Uczelni", data: "Zarząd", ikona: "🏛️" },
+  { imie: "Lemur",    powod: "Zarząd Uczelni", data: "Zarząd", ikona: "🏛️" }
 ];
 
 // --- 6. WYKŁADOWCY I PRZEDMIOTY ---
