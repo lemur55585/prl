@@ -78,14 +78,23 @@ a:hover{ text-decoration: underline; }
   text-transform: uppercase;
 }
 
-/* ZAKŁADKI NAWIGACYJNE (JAK WCZEŚNIEJ) */
+/* RAMKA Z ZAKŁADKAMI */
 .zakladki{
   display: flex;
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 24px;
-  padding: 0 20px;
+  width: calc(100% - 40px);
+  max-width: 860px;
+  margin: 28px auto 0;
+  padding: 14px;
+  background: var(--tlo-karta);
+  border: 1px solid var(--linia);
+  border-radius: 6px;
+}
+
+body:has(.kontener-szeroki) .zakladki{
+  max-width: 920px;
 }
 
 .zakladka{
@@ -93,8 +102,8 @@ a:hover{ text-decoration: underline; }
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 10px 22px;
-  background: var(--tlo-karta);
+  padding: 10px 20px;
+  background: var(--tlo-karta-jasniej);
   border: 1px solid var(--linia);
   border-radius: 4px;
   color: var(--tekst-przygaszony);
