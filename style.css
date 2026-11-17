@@ -36,13 +36,12 @@ a:hover{ text-decoration: underline; }
   padding: 0 20px 60px;
 }
 .kontener-szeroki{ max-width: 960px; }
-.kontener-waski{ max-width: 820px; }
 
 /* NAGŁÓWEK */
 .naglowek{
   position: relative;
   text-align: center;
-  padding: 64px 20px 40px;
+  padding: 56px 20px 40px;
   border-bottom: 3px solid var(--czerwien);
   background: linear-gradient(180deg, rgba(181,21,43,0.10), transparent 70%);
   overflow: hidden;
@@ -77,6 +76,43 @@ a:hover{ text-decoration: underline; }
   font-family: 'Oswald', sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* ZAKŁADKI NAWIGACYJNE (JAK WCZEŚNIEJ) */
+.zakladki{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding: 0 20px;
+}
+
+.zakladka{
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 22px;
+  background: var(--tlo-karta);
+  border: 1px solid var(--linia);
+  border-radius: 4px;
+  color: var(--tekst-przygaszony);
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zakladka:hover{
+  color: var(--tekst);
+  border-color: var(--zloto);
+  text-decoration: none;
+}
+
+.zakladka.aktywna{
+  background: linear-gradient(135deg, var(--czerwien), var(--czerwien-jasna));
+  border-color: var(--czerwien-jasna);
+  color: #fff;
 }
 
 /* SEKCJE I KARTY */
